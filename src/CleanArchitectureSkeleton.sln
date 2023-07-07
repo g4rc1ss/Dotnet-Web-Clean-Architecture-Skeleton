@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31808.319
@@ -42,6 +42,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infraestructure.DataAccess", "src\Infraestructure.DataAccess\Infraestructure.DataAccess.csproj", "{E1EB2965-839C-47C0-86B0-E9F4A0C7F32E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infraestructure.MongoDatabase", "src\Infraestructure.MongoDatabase\Infraestructure.MongoDatabase.csproj", "{1D41035C-0E36-4609-983D-AB3883D5325D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WeatherForecast", "WeatherForecast", "{D2A8EC22-05EF-44FB-9E06-9FA8B9788AC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,7 @@ Global
 		{BCA67212-590C-4863-8862-085A2504E0FE} = {734673B8-6C4B-4489-AD52-268BEE2DDC04}
 		{E1EB2965-839C-47C0-86B0-E9F4A0C7F32E} = {079B9A83-8AB7-4757-9404-CF611B512FC0}
 		{1D41035C-0E36-4609-983D-AB3883D5325D} = {A0453184-E060-4CC8-91DB-A1AEFAAC8A06}
+		{D2A8EC22-05EF-44FB-9E06-9FA8B9788AC4} = {DB6FD3CC-2392-4383-A768-778E9AA19E22}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D9910F84-F791-4753-8A02-193B05CB3472}

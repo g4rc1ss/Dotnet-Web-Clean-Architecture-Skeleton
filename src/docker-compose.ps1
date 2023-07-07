@@ -4,7 +4,7 @@ param (
     [string]$action,
 
     [Parameter(Mandatory=$true)]
-    [ValidateSet("dev", "pro", "stagging")]
+    [ValidateSet("local", "dev", "pro", "stagging")]
     [string]$environment,
 
     [Parameter(Mandatory=$false)]
@@ -19,15 +19,14 @@ $dockerComposeFile = "docker-compose.yml" + " "
 # Agregamos el parametro -f donde estan los servicios que usa la app para ejecutar en docker
 $commadDockerComposeToExecute += "-f " + $dockerComposeFile + " "
 
-if ($environment -eq "dev") {
+if ($environment -eq "local") {
     # Agregamos las variables para la ejecucion en local(dev)
     $commadDockerComposeToExecute += "-f " + ".env " 
 }
 
-if ($environment -eq "pro" -or $environment -eq "stagging") {
+if ($environment -eq "pro" -or $environment -eq "stagging" -or $environment -eq "dev") {
     $commadDockerComposeToExecute += "-f " + $dockerComposeDotnetAppCommand + " "
 }
-$commadDockerComposeToExecute += "-f " + $dockerComposeDotnetAppCommand + " "
 
 if ($action -eq "up") {
     
