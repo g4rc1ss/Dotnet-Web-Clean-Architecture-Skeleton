@@ -7,39 +7,38 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
-namespace Infraestructure.MySqlEntityFramework.Repositories.Command.WeatherForecastCommand
+namespace Infraestructure.DataAccess.Repositories.Command.WeatherForecastCommand;
+
+public class WeatherForecastCommandCreate : IWeatherForecastCommandCreateContract
 {
-    public class WeatherForecastCommandCreate : IWeatherForecastCommandCreateContract
+    private readonly MongoClient _mongoClient;
+    private readonly IDistributedCache _distributedCache;
+    private readonly ILogger<WeatherForecastCommandCreate> _logger;
+    private readonly IMapper _mapper;
+
+    public WeatherForecastCommandCreate(MongoClient mongoClient, IDistributedCache distributedCache, ILogger<WeatherForecastCommandCreate> logger, IMapper mapper)
     {
-        private readonly MongoClient _mongoClient;
-        private readonly IDistributedCache _distributedCache;
-        private readonly ILogger<WeatherForecastCommandCreate> _logger;
-        private readonly IMapper _mapper;
+        _mongoClient = mongoClient;
+        _distributedCache = distributedCache;
+        _logger = logger;
+        _mapper = mapper;
+    }
 
-        public WeatherForecastCommandCreate(MongoClient mongoClient, IDistributedCache distributedCache, ILogger<WeatherForecastCommandCreate> logger, IMapper mapper)
-        {
-            _mongoClient = mongoClient;
-            _distributedCache = distributedCache;
-            _logger = logger;
-            _mapper = mapper;
-        }
+    public async Task<int> ExecuteAsync(WeatherForecastCommandCreateRequest weather, CancellationToken cancellationToken = default)
+    {
+        var weatherForecast = _mapper.Map<WeatherForecast>(weather);
 
-        public async Task<int> ExecuteAsync(WeatherForecastCommandCreateRequest weather, CancellationToken cancellationToken = default)
-        {
-            var weatherForecast = _mapper.Map<WeatherForecast>(weather);
+        weatherForecast.Date = DateTime.Now;
 
-            weatherForecast.Date = DateTime.Now;
+        var collection = _mongoClient.GetDatabase("CleanArchitecture")
+            .GetCollection<WeatherForecast>("WeatherForecast");
 
-            var collection = _mongoClient.GetDatabase("CleanArchitecture")
-                .GetCollection<WeatherForecast>("WeatherForecast");
+        await collection.InsertOneAsync(weatherForecast, new InsertOneOptions { }, cancellationToken);
 
-            await collection.InsertOneAsync(weatherForecast, new InsertOneOptions { }, cancellationToken);
+        _logger.LogInformation("Guardando los datos en BBDD: {datos}", JsonSerializer.Serialize(weatherForecast));
 
-            _logger.LogInformation("Guardando los datos en BBDD: {datos}", JsonSerializer.Serialize(weatherForecast));
+        await _distributedCache.RemoveAsync("WeatherForecasts", cancellationToken);
 
-            await _distributedCache.RemoveAsync("WeatherForecasts", cancellationToken);
-
-            return 1;
-        }
+        return 1;
     }
 }

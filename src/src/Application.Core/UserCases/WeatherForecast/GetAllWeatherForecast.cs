@@ -25,7 +25,7 @@ internal class GetAllWeatherForecast : IGetAllWeatherForecastContract
             return UnProtectData(ref weathers);
         }
 
-        return new();
+        return null;
     }
 
 

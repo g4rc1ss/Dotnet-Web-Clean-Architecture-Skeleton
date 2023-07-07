@@ -2,7 +2,7 @@
 using Domain.Application.WeatherForecast.QueryAll;
 using Infraestructure.MongoDatabase.MongoDbEntities;
 
-namespace Infraestructure.MySqlEntityFramework.MapperProfiles.WeatherForecastProfiles
+namespace Infraestructure.DataAccess.MapperProfiles.WeatherForecastProfiles
 {
     public class WeatherForecastQueryAllMapper : Profile
     {

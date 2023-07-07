@@ -1,5 +1,5 @@
 ﻿using Application.Core;
-using Infraestructure.MySqlEntityFramework;
+using Infraestructure.DataAccess;
 using Microsoft.AspNetCore.DataProtection;
 
 namespace Api

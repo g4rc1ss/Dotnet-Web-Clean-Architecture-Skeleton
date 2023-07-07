@@ -7,7 +7,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
-namespace Infraestructure.MySqlEntityFramework.Repositories.Query.WeatherForecastQueries;
+namespace Infraestructure.DataAccess.Repositories.Query.WeatherForecastQueries;
 
 internal class WeatherForecastQueryAll : IWeatherForecastQueryAllContract
 {

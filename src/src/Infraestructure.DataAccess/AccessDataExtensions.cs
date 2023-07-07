@@ -1,12 +1,12 @@
 ﻿using Application.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts;
 using Application.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts;
+using Infraestructure.DataAccess.Repositories.Command.WeatherForecastCommand;
 using Infraestructure.MongoDatabase;
-using Infraestructure.MySqlEntityFramework.Repositories.Command.WeatherForecastCommand;
-using Infraestructure.MySqlEntityFramework.Repositories.Query.WeatherForecastQueries;
+using Infraestructure.DataAccess.Repositories.Query.WeatherForecastQueries;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infraestructure.MySqlEntityFramework;
+namespace Infraestructure.DataAccess;
 
 public static class AccessDataExtensions
 {
