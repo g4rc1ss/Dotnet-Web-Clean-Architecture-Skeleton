@@ -18,8 +18,31 @@
 		<PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.5.0-beta.1" />
 		<PackageReference Include="OpenTelemetry.Instrumentation.Process" Version="0.5.0-beta.3" />
 		<PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.5.0" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Api\Api.csproj" />
+	  <None Remove="Controllers\" />
+	  <None Remove="MapperProfiles\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Controllers\" />
+	  <Folder Include="MapperProfiles\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Application.Core\Application.Core.csproj">
+	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+	  </ProjectReference>
+	  <ProjectReference Include="..\Application.Interfaces\Application.Interfaces.csproj">
+	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+	  </ProjectReference>
+	  <ProjectReference Include="..\Infraestructure.DataAccess\Infraestructure.DataAccess.csproj">
+	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+	  </ProjectReference>
+	  <ProjectReference Include="..\Domain\Domain.csproj">
+	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+	  </ProjectReference>
+	  <ProjectReference Include="..\Shared\Shared.csproj">
+	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+	  </ProjectReference>
 	</ItemGroup>
 </Project>

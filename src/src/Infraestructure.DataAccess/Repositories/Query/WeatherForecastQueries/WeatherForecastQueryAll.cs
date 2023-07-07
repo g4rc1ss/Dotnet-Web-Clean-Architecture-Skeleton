@@ -3,7 +3,6 @@ using Application.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts
 using AutoMapper;
 using Domain.Application.WeatherForecast.QueryAll;
 using Infraestructure.MongoDatabase.MongoDbEntities;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;

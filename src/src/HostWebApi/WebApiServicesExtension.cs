@@ -1,9 +1,6 @@
 ﻿using Application.Core;
 using Infraestructure.MySqlEntityFramework;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using StackExchange.Redis;
 
 namespace Api
 {
@@ -13,7 +10,7 @@ namespace Api
         {
             services.AddAutoMapper(typeof(WebApiServicesExtension), typeof(BusinessExtensions), typeof(AccessDataExtensions));
             services.AddOptions();
-            services.AddRedisCache(configuration);
+            services.AddCache(configuration);
             services.ConfigureDataProtectionProvider(configuration);
 
 
@@ -23,25 +20,17 @@ namespace Api
             return services;
         }
 
-        public static IServiceCollection AddRedisCache(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = configuration["ConnectionStrings:RedisConnection"];
-                options.InstanceName = "localhost";
-            });
-            //services.AddDistributedMemoryCache();
+            services.AddDistributedMemoryCache();
             return services;
         }
 
         public static IServiceCollection ConfigureDataProtectionProvider(this IServiceCollection services, IConfiguration configuration)
         {
-            var redisConnection = ConnectionMultiplexer.Connect(configuration["ConnectionStrings:RedisConnection"]);
-            var redisKeys = "DataProtection-Keys";
-
+            var keysFolder = configuration["keysFolder"]!;
             services.AddDataProtection()
-                //.PersistKeysToFileSystem(new DirectoryInfo(@".\temp"))
-                .PersistKeysToStackExchangeRedis(redisConnection, redisKeys)
+                .PersistKeysToFileSystem(new DirectoryInfo(keysFolder))
                 .SetApplicationName("Aplicacion.WebApi");
             return services;
         }
