@@ -21,27 +21,10 @@
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Remove="Controllers\" />
-	  <None Remove="MapperProfiles\" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Controllers\" />
-	  <Folder Include="MapperProfiles\" />
-	</ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\Application.Core\Application.Core.csproj">
-	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-	  </ProjectReference>
-	  <ProjectReference Include="..\Application.Interfaces\Application.Interfaces.csproj">
-	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-	  </ProjectReference>
-	  <ProjectReference Include="..\Infraestructure.DataAccess\Infraestructure.DataAccess.csproj">
-	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-	  </ProjectReference>
-	  <ProjectReference Include="..\Domain\Domain.csproj">
-	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-	  </ProjectReference>
 	  <ProjectReference Include="..\Shared\Shared.csproj">
+	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+	  </ProjectReference>
+	  <ProjectReference Include="..\WeatherForecast\WeatherForecast.API\WeatherForecast.API.csproj">
 	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
 	  </ProjectReference>
 	</ItemGroup>

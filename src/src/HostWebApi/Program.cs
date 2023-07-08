@@ -1,5 +1,6 @@
 ﻿using Api;
 using HostWebApi.Extensions;
+using WeatherForecast.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.AddProblemDetails();
 
 
 builder.Services.AddControllers()
-    .AddApplicationPart(typeof(WebApiServicesExtension).Assembly);
+    .AddApplicationPart(typeof(WeatherForecastApiExtensions).Assembly);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
