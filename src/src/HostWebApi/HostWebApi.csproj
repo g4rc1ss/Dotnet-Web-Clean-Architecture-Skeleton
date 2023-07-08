@@ -27,5 +27,8 @@
 	  <ProjectReference Include="..\WeatherForecast\WeatherForecast.API\WeatherForecast.API.csproj">
 	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
 	  </ProjectReference>
+	  <ProjectReference Include="..\User\User.API\User.API.csproj">
+	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+	  </ProjectReference>
 	</ItemGroup>
 </Project>
