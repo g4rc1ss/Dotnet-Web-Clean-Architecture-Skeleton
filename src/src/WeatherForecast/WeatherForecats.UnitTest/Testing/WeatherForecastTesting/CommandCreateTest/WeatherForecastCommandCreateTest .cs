@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Domain.Application.WeatherForecast.ComandCreate;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 
 namespace TestUnitarios.Testing.WeatherForecastTesting.CommandCreateTest;
 

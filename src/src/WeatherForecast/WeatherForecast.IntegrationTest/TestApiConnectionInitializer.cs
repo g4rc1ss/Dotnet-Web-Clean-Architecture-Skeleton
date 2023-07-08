@@ -1,8 +1,6 @@
-﻿using System;
-using System.Net.Http;
+﻿using HostWebApi.Test.Configurations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TestIntegracionHost.Configurations;
 
 namespace WeatherForecast.IntegrationTest;
 

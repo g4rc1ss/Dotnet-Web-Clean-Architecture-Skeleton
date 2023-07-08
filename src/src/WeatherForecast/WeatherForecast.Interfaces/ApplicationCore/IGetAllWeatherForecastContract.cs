@@ -1,12 +1,9 @@
-﻿using System;
-using Domain.Application.WeatherForecast.ComandCreate;
-using Domain.Application.WeatherForecast.QueryAll;
+﻿using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
 
-namespace Application.Interfaces.ApplicationCore
+namespace WeatherForecast.Interfaces.ApplicationCore;
+
+public interface IGetAllWeatherForecastContract
 {
-    public interface IGetAllWeatherForecastContract
-    {
-        Task<List<WeatherForecastQueryAllResponse>> ExecuteAsync(CancellationToken cancellationToken = default);
-    }
+    Task<List<WeatherForecastQueryAllResponse>> ExecuteAsync(CancellationToken cancellationToken = default);
 }
 

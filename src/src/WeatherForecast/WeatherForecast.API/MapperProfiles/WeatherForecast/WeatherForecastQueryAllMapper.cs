@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
-using Domain.Application.WeatherForecast.QueryAll;
-using Shared.Peticiones.Responses.WeatherForecast;
+using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
+using WeatherForecast.Shared.Peticiones.Responses.WeatherForecast;
 
-namespace Api.MapperProfiles.WeatherForecast
+namespace WeatherForecast.API.MapperProfiles.WeatherForecast;
+
+public class WeatherForecastQueryAllMapper : Profile
 {
-    public class WeatherForecastQueryAllMapper : Profile
+    public WeatherForecastQueryAllMapper()
     {
-        public WeatherForecastQueryAllMapper()
-        {
-            CreateMap<WeatherForecastQueryAllResponse, WeatherForecastResponse>();
-        }
+        CreateMap<WeatherForecastQueryAllResponse, WeatherForecastResponse>();
     }
 }

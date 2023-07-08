@@ -1,13 +1,13 @@
 ﻿using System.Text.Json;
-using Application.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts;
+using WeatherForecast.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts;
 using AutoMapper;
-using Domain.Application.WeatherForecast.ComandCreate;
 using Infraestructure.MongoDatabase.MongoDbEntities;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 
-namespace Infraestructure.DataAccess.Repositories.Command.WeatherForecastCommand;
+namespace WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
 
 public class WeatherForecastCommandCreate : IWeatherForecastCommandCreateContract
 {

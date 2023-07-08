@@ -1,10 +1,9 @@
-﻿using Application.Interfaces.ApplicationCore;
-using Application.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts;
-using Domain.Application.WeatherForecast.ComandCreate;
-using Domain.Application.WeatherForecast.QueryAll;
+﻿using WeatherForecast.Interfaces.ApplicationCore;
+using WeatherForecast.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts;
 using Microsoft.AspNetCore.DataProtection;
+using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
 
-namespace Application.Core.UserCases.WeatherForecast;
+namespace WeatherForecast.Application.UserCases.WeatherForecast;
 
 internal class GetAllWeatherForecast : IGetAllWeatherForecastContract
 {

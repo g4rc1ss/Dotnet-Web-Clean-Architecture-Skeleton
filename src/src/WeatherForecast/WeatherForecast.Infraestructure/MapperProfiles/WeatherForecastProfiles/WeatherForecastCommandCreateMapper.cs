@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
-using Domain.Application.WeatherForecast.ComandCreate;
 using Infraestructure.MongoDatabase.MongoDbEntities;
+using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 
-namespace Infraestructure.DataAccess.MapperProfiles.WeatherForecastProfiles
+namespace WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
+
+public class WeatherForecastCommandCreateMapper : Profile
 {
-    public class WeatherForecastCommandCreateMapper : Profile
+    public WeatherForecastCommandCreateMapper()
     {
-        public WeatherForecastCommandCreateMapper()
-        {
-            CreateMap<WeatherForecastCommandCreateRequest, WeatherForecastEntity>();
-        }
+        CreateMap<WeatherForecastCommandCreateRequest, WeatherForecastEntity>();
     }
 }

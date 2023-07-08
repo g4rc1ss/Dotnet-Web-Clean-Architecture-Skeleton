@@ -1,7 +1,7 @@
-﻿using Application.Interfaces.ApplicationCore;
-using Microsoft.Extensions.DependencyInjection;
-using TestUnitarios.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqCommands.MoqCreate.CommandCreateValidatingFalseData;
-using TestUnitarios.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqCommands.MoqCreate.CommandCreateValidatingTrueData;
+﻿using Microsoft.Extensions.DependencyInjection;
+using WeatherForecast.Interfaces.ApplicationCore;
+using WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqCommands.MoqCreate.CommandCreateValidatingFalseData;
+using WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqCommands.MoqCreate.CommandCreateValidatingTrueData;
 
 namespace TestUnitarios.Testing.WeatherForecastTesting.CommandCreateTest
 {

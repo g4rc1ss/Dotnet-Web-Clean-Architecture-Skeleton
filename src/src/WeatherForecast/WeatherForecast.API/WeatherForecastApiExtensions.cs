@@ -1,4 +1,4 @@
-﻿using Application.Core;
+﻿using WeatherForecast.Application;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,13 +1,13 @@
 ﻿using System.Text.Json;
-using Application.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts;
+using WeatherForecast.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts;
 using AutoMapper;
-using Domain.Application.WeatherForecast.QueryAll;
 using Infraestructure.MongoDatabase.MongoDbEntities;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
 
-namespace Infraestructure.DataAccess.Repositories.Query.WeatherForecastQueries;
+namespace WeatherForecast.Infraestructure.Repositories.Query.WeatherForecastQueries;
 
 internal class WeatherForecastQueryAll : IWeatherForecastQueryAllContract
 {

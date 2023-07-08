@@ -1,7 +1,7 @@
-﻿using Application.Interfaces.ApplicationCore;
+﻿using WeatherForecast.Interfaces.ApplicationCore;
 using Microsoft.Extensions.DependencyInjection;
-using TestUnitarios.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqQueries.QueryAll.QueryAllValidatingFalseData;
-using TestUnitarios.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqQueries.QueryAll.QueryAllValidatingTrueData;
+using WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqQueries.QueryAll.QueryAllValidatingTrueData;
+using WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqQueries.QueryAll.QueryAllValidatingFalseData;
 
 namespace TestUnitarios.Testing.WeatherForecastTesting.QueryAllTesting
 {

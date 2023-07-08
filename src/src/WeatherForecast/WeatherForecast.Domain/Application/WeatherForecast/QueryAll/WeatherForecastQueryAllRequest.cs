@@ -1,8 +1,5 @@
-﻿
+﻿namespace WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
 
-namespace Domain.Application.WeatherForecast.QueryAll
+public class WeatherForecastQueryAllRequest
 {
-    public class WeatherForecastQueryAllRequest
-    {
-    }
 }

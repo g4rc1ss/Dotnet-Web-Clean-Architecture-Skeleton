@@ -1,23 +1,22 @@
 ﻿using System.Threading;
-using Application.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts;
-using Domain.Application.WeatherForecast.ComandCreate;
+using WeatherForecast.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts;
 using Moq;
+using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 
-namespace TestUnitarios.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqCommands.MoqCreate.CommandCreateValidatingFalseData
+namespace WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqCommands.MoqCreate.CommandCreateValidatingFalseData;
+
+internal class WFCommandCreateFalseData
 {
-    internal class WFCommandCreateFalseData
+    public Mock<IWeatherForecastCommandCreateContract> Mock { get; set; }
+
+    public WFCommandCreateFalseData()
     {
-        public Mock<IWeatherForecastCommandCreateContract> Mock { get; set; }
+        Mock = new Mock<IWeatherForecastCommandCreateContract>();
+        Initialize();
+    }
 
-        public WFCommandCreateFalseData()
-        {
-            Mock = new Mock<IWeatherForecastCommandCreateContract>();
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            Mock.Setup(x => x.ExecuteAsync(It.IsAny<WeatherForecastCommandCreateRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(0);
-        }
+    private void Initialize()
+    {
+        Mock.Setup(x => x.ExecuteAsync(It.IsAny<WeatherForecastCommandCreateRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(0);
     }
 }

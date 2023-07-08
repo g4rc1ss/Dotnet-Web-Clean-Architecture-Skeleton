@@ -1,7 +1,6 @@
-﻿namespace Domain.Application.WeatherForecast.ComandCreate
+﻿namespace WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
+
+public class WeatherForecastCommandCreateResponse
 {
-    public class WeatherForecastCommandCreateResponse
-    {
-        public bool Success { get; set; }
-    }
+    public bool Success { get; set; }
 }

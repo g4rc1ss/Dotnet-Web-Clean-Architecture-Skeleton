@@ -1,14 +1,12 @@
-﻿
-namespace Domain.Application.WeatherForecast.QueryAll
+﻿namespace WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
+
+public class WeatherForecastQueryAllResponse
 {
-    public class WeatherForecastQueryAllResponse
-    {
-        public DateTime Date { get; set; }
+    public DateTime Date { get; set; }
 
-        public int? TemperatureC { get; set; }
+    public int? TemperatureC { get; set; }
 
-        public int? TemperatureF { get; set; }
+    public int? TemperatureF { get; set; }
 
-        public string? Summary { get; set; }
-    }
+    public string? Summary { get; set; }
 }

@@ -25,9 +25,9 @@
 	  <Folder Include="MapperProfiles\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Shared\Shared.csproj" />
 	  <ProjectReference Include="..\WeatherForecast.Interfaces\WeatherForecast.Interfaces.csproj" />
 	  <ProjectReference Include="..\WeatherForecast.Application\WeatherForecast.Application.csproj" />
 	  <ProjectReference Include="..\WeatherForecast.Infraestructure\WeatherForecast.Infraestructure.csproj" />
+	  <ProjectReference Include="..\WeatherForecast.Shared\WeatherForecast.Shared.csproj" />
 	</ItemGroup>
 </Project>

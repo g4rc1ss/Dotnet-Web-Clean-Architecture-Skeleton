@@ -1,8 +1,8 @@
-﻿using Application.Core.UserCases.WeatherForecast;
-using Application.Interfaces.ApplicationCore;
+﻿using WeatherForecast.Interfaces.ApplicationCore;
 using Microsoft.Extensions.DependencyInjection;
+using WeatherForecast.Application.UserCases.WeatherForecast;
 
-namespace Application.Core;
+namespace WeatherForecast.Application;
 
 public static class BusinessExtensions
 {

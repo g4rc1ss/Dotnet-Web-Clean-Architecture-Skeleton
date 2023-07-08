@@ -1,10 +1,10 @@
-﻿using Application.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts;
-using Application.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts;
-using Infraestructure.DataAccess.Repositories.Command.WeatherForecastCommand;
+﻿using WeatherForecast.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts;
+using WeatherForecast.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts;
 using Infraestructure.MongoDatabase;
-using Infraestructure.DataAccess.Repositories.Query.WeatherForecastQueries;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WeatherForecast.Infraestructure.Repositories.Query.WeatherForecastQueries;
+using WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
 
 namespace WeatherForecast.Infraestructure;
 

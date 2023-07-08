@@ -1,11 +1,9 @@
 ﻿using System;
-using Application.Core;
+using WeatherForecast.Application;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TestUnitarios.Mocks.MockingInfraestructure.MoqWeatherForecast;
-using TestUnitarios.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqCommands.MoqCreate.CommandCreateValidatingTrueData;
-using TestUnitarios.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqQueries.QueryAll;
+using WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast;
 
 namespace TestUnitarios
 {

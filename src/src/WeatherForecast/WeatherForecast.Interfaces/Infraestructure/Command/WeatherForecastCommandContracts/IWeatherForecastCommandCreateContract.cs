@@ -1,9 +1,8 @@
-﻿using Domain.Application.WeatherForecast.ComandCreate;
+﻿using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 
-namespace Application.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts
+namespace WeatherForecast.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts;
+
+public interface IWeatherForecastCommandCreateContract
 {
-    public interface IWeatherForecastCommandCreateContract
-    {
-        Task<int> ExecuteAsync(WeatherForecastCommandCreateRequest weather, CancellationToken cancellationToken = default);
-    }
+    Task<int> ExecuteAsync(WeatherForecastCommandCreateRequest weather, CancellationToken cancellationToken = default);
 }

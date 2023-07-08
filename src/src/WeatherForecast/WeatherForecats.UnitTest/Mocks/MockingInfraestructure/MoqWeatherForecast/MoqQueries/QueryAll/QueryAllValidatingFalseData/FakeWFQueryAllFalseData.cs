@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Domain.Application.WeatherForecast.QueryAll;
+using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
 
-namespace TestUnitarios.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqQueries.QueryAll.QueryAllValidatingFalseData
+namespace WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqQueries.QueryAll.QueryAllValidatingFalseData;
+
+internal static class FakeWFQueryAllFalseData
 {
-    internal static class FakeWFQueryAllFalseData
-    {
-        public static List<WeatherForecastQueryAllResponse> GetFakeWeather => null;
-    }
+    public static List<WeatherForecastQueryAllResponse> GetFakeWeather => null;
 }

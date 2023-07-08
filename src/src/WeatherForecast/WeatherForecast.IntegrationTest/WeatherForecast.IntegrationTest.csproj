@@ -20,8 +20,8 @@
 		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Shared\Shared.csproj" />
 	  <ProjectReference Include="..\..\..\test\HostWebApi.Test\HostWebApi.Test.csproj" />
+	  <ProjectReference Include="..\WeatherForecast.Shared\WeatherForecast.Shared.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="ControllersTest\" />

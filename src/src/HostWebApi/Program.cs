@@ -1,5 +1,4 @@
-﻿using Api;
-using HostWebApi.Extensions;
+﻿using HostWebApi.Extensions;
 using User.API;
 using WeatherForecast.API;
 
