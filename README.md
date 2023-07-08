@@ -25,12 +25,12 @@ Si queremos ejecutar el docker en un entorno dev, stagging o pro en un servidor 
 
 Si queremos desmontar o eliminar los contenedores ejecutaremos el comando
 ```powershell
-./docker-compose.ps1 down
+./docker-compose.ps1 down local
 ```
 El comando con el parametro `down` solamente elimina los contenedores, pero este docker-compose contiene volumenes persistentes, si quieres eliminarlos se usa junto al parametro `v``
 
 ```powershell
-./docker-compose.ps1 down v
+./docker-compose.ps1 down local v
 ```
 > Hay que tener en cuenta que con el parametro `v`se eliminan todos los volumenes persistentes, no es recomendable usarlo en despliegue, sobretodo en produccion.
 
