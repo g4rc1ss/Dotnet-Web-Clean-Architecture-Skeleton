@@ -1,5 +1,3 @@
-# Nombre
-
 ## Descripción
 ---
 Skeleton de una Clean Architecture en .net
@@ -34,9 +32,12 @@ El comando con el parametro `down` solamente elimina los contenedores, pero este
 ```
 > Hay que tener en cuenta que con el parametro `v`se eliminan todos los volumenes persistentes, no es recomendable usarlo en despliegue, sobretodo en produccion.
 
-
+## CI/DC
+[![.NET](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/dotnet.yml/badge.svg)](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/dotnet.yml)
+[![CodeQL](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/codeql-analysis.yml)
 
 ## Autor/es
 ---
 - [Asier García](https://github.com/g4rc1ss)
+
 
