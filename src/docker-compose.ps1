@@ -36,4 +36,5 @@ if ($action -eq "up") {
     $commadDockerComposeToExecute += $removeVolumes -eq "v" ? "-v " : ""
 }
 
+Write-Output "Comando a ejecutar" + $commadDockerComposeToExecute
 Invoke-Expression $commadDockerComposeToExecute

@@ -12,7 +12,6 @@ public class WebApplicationFactoryConfiguration : WebApplicationFactory<Program>
         builder.ConfigureAppConfiguration((hostBuilder, config) =>
         {
             config.SetBasePath(Directory.GetCurrentDirectory());
-            config.AddJsonFile("appsettings.test.json", false);
         });
         builder.UseEnvironment("Development");
     }
