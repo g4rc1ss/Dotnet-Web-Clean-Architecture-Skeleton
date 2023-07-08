@@ -40,5 +40,4 @@ Console.WriteLine(app.Configuration["AppName"]!);
 
 await app.RunAsync();
 
-
 public partial class Program { }
