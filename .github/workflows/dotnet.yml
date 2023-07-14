@@ -39,7 +39,7 @@ jobs:
     - name: Ejecutar comando de PowerShell
       run: |
         cd src
-        pwsh -File ./docker-compose.ps1 up local
+        pwsh -File ./docker-compose.ps1 up dev
         cd ..
         
     - name: Test
