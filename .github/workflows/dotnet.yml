@@ -32,6 +32,6 @@ jobs:
         cd src
         pwsh -File ./docker-compose.ps1 up dev
         cd ..
-        
+    
     - name: Test
       run: dotnet test ./src/
