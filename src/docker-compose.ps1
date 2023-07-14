@@ -4,7 +4,7 @@ param (
     [string]$action,
 
     [Parameter(Mandatory = $true)]
-    [ValidateSet("local", "dev", "pro", "stagging")]
+    [ValidateSet("local", "dev", "pro", "pre")]
     [string]$environment,
 
     [Parameter(Mandatory = $false)]
@@ -15,19 +15,18 @@ param (
 $commadDockerComposeToExecute = "docker-compose "
 $dockerComposeDotnetAppCommand = "docker-compose.dotnetapp.yml" + " "
 $dockerComposeFile = "docker-compose.yml" + " "
-
+$enviromentFile = ".env.$environment "
 
 # Agregamos el parametro -f donde estan los servicios que usa la app para ejecutar en docker
 $commadDockerComposeToExecute += "-f " + $dockerComposeFile + " "
 
-if ($environment -eq "local") {
-    # Agregamos las variables para la ejecucion en local(dev)
-    $commadDockerComposeToExecute += "-f " + ".env " 
-}
 
-if ($environment -eq "pro" -or $environment -eq "stagging" -or $environment -eq "dev") {
+$commadDockerComposeToExecute += "--env-file " + $enviromentFile
+if ($environment -eq "pro" -or $environment -eq "pre" -or $environment -eq "dev") {
     if ($action -eq "up") {
-        Invoke-Expression "docker-compose -f $dockerComposeDotnetAppCommand -f $dockerComposeFile build" 
+        $buildExec = "docker-compose -f $dockerComposeDotnetAppCommand -f $dockerComposeFile --env-file $enviromentFile build" 
+        Write-Output $buildExec
+        Invoke-Expression $buildExec
     }
 
     $commadDockerComposeToExecute += "-f " + $dockerComposeDotnetAppCommand + " "
