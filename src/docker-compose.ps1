@@ -15,7 +15,7 @@ param (
     [string]$manualEnvPath
 )
 
-$commadDockerComposeToExecute = "docker-compose "
+$commadDockerComposeToExecute = "docker compose "
 $dockerComposeDotnetAppCommand = "docker-compose.dotnetapp.yml" + " "
 $dockerComposeFile = "docker-compose.yml" + " "
 $enviromentFile = ".env.$environment "
