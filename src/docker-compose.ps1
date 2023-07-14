@@ -29,7 +29,7 @@ if ($manualEnvPath -ne "") {
 $commadDockerComposeToExecute += "--env-file " + $enviromentFile
 if ($environment -eq "pro" -or $environment -eq "pre" -or $environment -eq "dev") {
     if ($action -eq "up") {
-        $buildExec = "docker-compose -f $dockerComposeDotnetAppCommand -f $dockerComposeFile --env-file $enviromentFile build" 
+        $buildExec = "docker compose -f $dockerComposeDotnetAppCommand -f $dockerComposeFile --env-file $enviromentFile build" 
         Write-Output $buildExec
         Invoke-Expression $buildExec
     }
