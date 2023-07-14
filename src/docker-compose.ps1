@@ -9,7 +9,10 @@ param (
 
     [Parameter(Mandatory = $false)]
     [ValidateSet("v")]
-    [string]$removeVolumes
+    [string]$removeVolumes,
+
+    [Parameter(Mandatory = $false)]
+    [string]$manualEnvPath
 )
 
 $commadDockerComposeToExecute = "docker-compose "
@@ -20,7 +23,9 @@ $enviromentFile = ".env.$environment "
 # Agregamos el parametro -f donde estan los servicios que usa la app para ejecutar en docker
 $commadDockerComposeToExecute += "-f " + $dockerComposeFile + " "
 
-
+if ($manualEnvPath -ne "") {
+    $enviromentFile = "$manualEnvPath "
+}
 $commadDockerComposeToExecute += "--env-file " + $enviromentFile
 if ($environment -eq "pro" -or $environment -eq "pre" -or $environment -eq "dev") {
     if ($action -eq "up") {
