@@ -12,6 +12,8 @@ GF_USERS_ALLOW_SIGN_UP_SKELETON='false'
 
 # ASP
 # Ruta del certificado en nuestra maquina(host, no docker)
+HTTP_PORT_SKELETON=80
+HTTPS_PORT_SKELETON=443
 ASPNETCORE_Kestrel_Certificate_From_Path_SKELETON=./cert.pfx
 ASPNETCORE_Kestrel__Certificates__Default__Path_SKELETON=/app/cert.pfx
 ASPNETCORE_Kestrel__Certificates__Default__Password_SKELETON=password

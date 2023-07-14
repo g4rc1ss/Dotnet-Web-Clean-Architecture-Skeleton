@@ -21,8 +21,8 @@ services:
       - ConnectionStrings__OpenTelemetry=${ConnectionStrings__OpenTelemetry_SKELETON}
       - ConnectionStrings__SeqLogs=${ConnectionStrings__SeqLogs_SKELETON}
     ports:
-      - "5001:80"
-      - "5101:443"
+      - "${HTTP_PORT_SKELETON}:80"
+      - "${HTTPS_PORT_SKELETON}:443"
     volumes:
       - dotnetapp_keys_data:${keysFolder_SKELETON}
     networks:

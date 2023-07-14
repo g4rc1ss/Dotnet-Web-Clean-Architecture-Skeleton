@@ -33,8 +33,5 @@ ARG certificatePathTo
 COPY --from=build /app/out .
 COPY --from=build ${certificatePathTo} .
 
-# Expone el puerto de la aplicación
-EXPOSE 80
-
 # Inicia la aplicación
 ENTRYPOINT ["dotnet", "HostWebApi.dll"]
