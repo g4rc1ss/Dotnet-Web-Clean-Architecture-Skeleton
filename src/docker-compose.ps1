@@ -1,20 +1,21 @@
 param (
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [ValidateSet("up", "down")]
     [string]$action,
 
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [ValidateSet("local", "dev", "pro", "stagging")]
     [string]$environment,
 
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory = $false)]
     [ValidateSet("v")]
     [string]$removeVolumes
 )
 
 $commadDockerComposeToExecute = "docker-compose "
-$dockerComposeDotnetAppCommand = "docker-compose.dotnetapp.yml" +" "
+$dockerComposeDotnetAppCommand = "docker-compose.dotnetapp.yml" + " "
 $dockerComposeFile = "docker-compose.yml" + " "
+
 
 # Agregamos el parametro -f donde estan los servicios que usa la app para ejecutar en docker
 $commadDockerComposeToExecute += "-f " + $dockerComposeFile + " "
@@ -25,15 +26,21 @@ if ($environment -eq "local") {
 }
 
 if ($environment -eq "pro" -or $environment -eq "stagging" -or $environment -eq "dev") {
+    if ($action -eq "up") {
+        Invoke-Expression "docker-compose -f $dockerComposeDotnetAppCommand -f $dockerComposeFile build" 
+    }
+
     $commadDockerComposeToExecute += "-f " + $dockerComposeDotnetAppCommand + " "
 }
 
 if ($action -eq "up") {
-    
     $commadDockerComposeToExecute += "up -d "
-} elseif ($action -eq "down") {
+
+}
+elseif ($action -eq "down") {
     $commadDockerComposeToExecute += "down "
     $commadDockerComposeToExecute += $removeVolumes -eq "v" ? "-v " : ""
+
 }
 
 Write-Output "Comando a ejecutar" + $commadDockerComposeToExecute
