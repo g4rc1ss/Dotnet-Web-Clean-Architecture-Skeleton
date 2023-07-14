@@ -13,6 +13,6 @@ public class WebApplicationFactoryConfiguration : WebApplicationFactory<Program>
         {
             config.SetBasePath(Directory.GetCurrentDirectory());
         });
-        builder.UseEnvironment("Development");
+        builder.UseEnvironment("local");
     }
 }
