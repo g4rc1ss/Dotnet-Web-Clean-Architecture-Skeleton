@@ -30,8 +30,9 @@ jobs:
     - name: Ejecutar comando de PowerShell
       run: |
         cd src
+        ls -la
         pwsh -File ./docker-compose.ps1 up dev
         cd ..
-        
+    
     - name: Test
       run: dotnet test ./src/
