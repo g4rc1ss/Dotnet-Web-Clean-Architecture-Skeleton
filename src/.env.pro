@@ -5,11 +5,6 @@ MONGO_INITDB_ROOT_USERNAME_SKELETON=root
 MONGO_INITDB_ROOT_PASSWORD_SKELETON=contraseñafuerteproduccionentorno
 MONGO_INITDB_DATABASE_SKELETON=CleanArchitecture
 
-# Grafana 
-GF_SECURITY_ADMIN_USER_SKELETON=admin
-GF_SECURITY_ADMIN_PASSWORD_SKELETON=adminStrongPasswordProduction
-GF_USERS_ALLOW_SIGN_UP_SKELETON='false'
-
 # ASP
 # Ruta del certificado en nuestra maquina(host, no docker)
 HTTP_PORT_SKELETON=80

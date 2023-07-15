@@ -31,7 +31,6 @@ services:
       - mongodb
       - opentelemetry-collector
       - prometheus-opentelemetry
-      - grafana-opentelemetry
       - zipkin-opentelemetry
       - seq-logs
 
