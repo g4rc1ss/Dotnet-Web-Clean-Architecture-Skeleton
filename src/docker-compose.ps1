@@ -16,7 +16,7 @@ param (
 )
 
 $commadDockerComposeToExecute = "docker compose "
-$dockerComposeDotnetAppCommand = "docker-compose.dotnetapp.yml "
+$dockerComposeDotnetAppCommand = "docker-compose.app.yml "
 $dockerComposeGrafanaCommand = "docker-compose.grafana.yml "
 $dockerComposeFile = "docker-compose.yml "
 $enviromentFile = ".env.$environment "
