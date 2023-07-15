@@ -20,6 +20,7 @@ services:
     volumes:
       - ./.docker/MongoDB/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - mongodb_data:/data
+      - mongodb_data:/data/db
 
  ########
 ## Logs ##
