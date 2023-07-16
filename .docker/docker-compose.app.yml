@@ -3,7 +3,7 @@ version: '3.8'
 services:
   dotnetapp:
     build:
-      context: .
+      context: ../src
       dockerfile: dockerfile
       args:
         - environmentDeploy=${ASPNETCORE_ENVIRONMENT_SKELETON}

@@ -18,7 +18,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD_SKELETON}
       - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE_SKELETON}
     volumes:
-      - ./.docker/MongoDB/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./MongoDB/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - mongodb_data:/data
       - mongodb_data:/data/db
 
@@ -55,7 +55,7 @@ services:
       - telemetryNetwork
     command: [ "--config=/etc/openTelemetry.yaml" ]
     volumes:
-      - ./.docker/Observability/openTelemetry.yaml:/etc/openTelemetry.yaml
+      - ./Observability/openTelemetry.yaml:/etc/openTelemetry.yaml
     ports:
       - "8888:8888"   # Prometheus metrics exposed by the collector
       - "8889:8889"   # Prometheus exporter metrics
@@ -68,7 +68,7 @@ services:
     networks:
       - telemetryNetwork
     volumes:
-      - ./.docker/Observability/prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./Observability/prometheus.yaml:/etc/prometheus/prometheus.yml
       - prometheus_metrics_data:/prometheus
     ports:
       - 9090:9090
