@@ -5,22 +5,6 @@ networks:
     driver: bridge
 
 services:
-  mongodb:
-    container_name: mongodb
-    image: mongo
-    restart: always
-    networks:
-      - telemetryNetwork
-    ports:
-      - 27017:27017
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME_SKELETON}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD_SKELETON}
-      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE_SKELETON}
-    volumes:
-      - ./MongoDB/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-      - mongodb_data:/data
-      - mongodb_data:/data/db
 
  ########
 ## Logs ##
@@ -86,7 +70,6 @@ services:
 ###############################
 
 volumes:
-  mongodb_data:
   prometheus_metrics_data:
   grafana_metrics_data:
   seq_data:
