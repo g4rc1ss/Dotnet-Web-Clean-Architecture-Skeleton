@@ -9,35 +9,23 @@ using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 
 namespace WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
 
-public class WeatherForecastCommandCreate : IWeatherForecastCommandCreateContract
+public class WeatherForecastCommandCreate(MongoClient mongoClient, IDistributedCache distributedCache, ILogger<WeatherForecastCommandCreate> logger, IMapper mapper) 
+: IWeatherForecastCommandCreateContract
 {
-    private readonly MongoClient _mongoClient;
-    private readonly IDistributedCache _distributedCache;
-    private readonly ILogger<WeatherForecastCommandCreate> _logger;
-    private readonly IMapper _mapper;
-
-    public WeatherForecastCommandCreate(MongoClient mongoClient, IDistributedCache distributedCache, ILogger<WeatherForecastCommandCreate> logger, IMapper mapper)
-    {
-        _mongoClient = mongoClient;
-        _distributedCache = distributedCache;
-        _logger = logger;
-        _mapper = mapper;
-    }
-
     public async Task<int> ExecuteAsync(WeatherForecastCommandCreateRequest weather, CancellationToken cancellationToken = default)
     {
-        var weatherForecast = _mapper.Map<WeatherForecastEntity>(weather);
+        var weatherForecast = mapper.Map<WeatherForecastEntity>(weather);
 
         weatherForecast.Date = DateTime.Now;
 
-        var collection = _mongoClient.GetDatabase("CleanArchitecture")
+        var collection = mongoClient.GetDatabase("CleanArchitecture")
             .GetCollection<WeatherForecastEntity>("WeatherForecast");
 
         await collection.InsertOneAsync(weatherForecast, new InsertOneOptions { }, cancellationToken);
 
-        _logger.LogInformation("Guardando los datos en BBDD: {datos}", JsonSerializer.Serialize(weatherForecast));
+        logger.LogInformation("Guardando los datos en BBDD: {@datos}", weatherForecast);
 
-        await _distributedCache.RemoveAsync("WeatherForecasts", cancellationToken);
+        await distributedCache.RemoveAsync("WeatherForecasts", cancellationToken);
 
         return 1;
     }
