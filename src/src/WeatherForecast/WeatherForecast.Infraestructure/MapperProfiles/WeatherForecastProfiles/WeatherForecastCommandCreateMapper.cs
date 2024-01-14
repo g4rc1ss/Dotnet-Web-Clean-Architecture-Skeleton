@@ -1,13 +1,11 @@
-﻿using AutoMapper;
-using Infraestructure.MongoDatabase.MongoDbEntities;
+﻿using Infraestructure.MongoDatabase.MongoDbEntities;
+using Riok.Mapperly.Abstractions;
 using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 
 namespace WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
 
-public class WeatherForecastCommandCreateMapper : Profile
+[Mapper]
+public partial class WeatherForecastCommandCreateMapper
 {
-    public WeatherForecastCommandCreateMapper()
-    {
-        CreateMap<WeatherForecastCommandCreateRequest, WeatherForecastEntity>();
-    }
+    public partial WeatherForecastEntity WeatherRequestToEntity(WeatherForecastCommandCreateRequest weatherForecastCommandCreate);
 }

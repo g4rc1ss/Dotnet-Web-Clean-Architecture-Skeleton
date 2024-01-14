@@ -10,7 +10,6 @@ public static class WeatherForecastApiExtensions
 {
     public static IServiceCollection InicializarConfiguracionApp(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddAutoMapper(typeof(WeatherForecastApiExtensions), typeof(BusinessExtensions), typeof(WeatherForecastInfraestructureExtensions));
         services.AddOptions();
         services.AddCache(configuration);
         services.ConfigureDataProtectionProvider(configuration);
