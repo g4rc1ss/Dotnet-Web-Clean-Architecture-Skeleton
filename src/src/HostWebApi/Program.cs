@@ -1,4 +1,5 @@
 ﻿using HostWebApi.Extensions;
+using MongoDB.Driver;
 using User.API;
 using WeatherForecast.API;
 
@@ -19,6 +20,7 @@ builder.Services.AddControllers()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpLogging(o => { });
 
 var app = builder.Build();
 
@@ -29,10 +31,10 @@ if (!app.Environment.IsProduction())
     app.UseSwaggerUI();
 }
 
-app.UseHttpLogging();
-
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
+app.UseHttpLogging();
 
 app.MapControllers();
 

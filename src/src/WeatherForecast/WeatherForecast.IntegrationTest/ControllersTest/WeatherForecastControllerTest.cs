@@ -7,20 +7,13 @@ using Xunit;
 namespace WeatherForecast.IntegrationTest.ControllersTest;
 
 [Collection(FixtureWeatherForecastNamesConstants.WeatherForecastTest)]
-public class WeatherForecastControllerTest
+public class WeatherForecastControllerTest(TestApiConnectionInitializer apiConnection)
 {
-    private readonly TestApiConnectionInitializer _apiConnection;
-
-    public WeatherForecastControllerTest(TestApiConnectionInitializer apiConnection)
-    {
-        _apiConnection = apiConnection;
-    }
-
     [Fact]
     public async Task GetWeatherForecastByAPI_Then_ReturnJsonAndDeserialiceToIEnumerable_NotNullAndOneOrMoreResults()
     {
 
-        var client = _apiConnection.ApiClient;
+        var client = apiConnection.ApiClient;
         var response = await client.GetFromJsonAsync<IEnumerable<WeatherForecastResponse>>("WeatherForecast/all");
         response.Should().NotBeNull();
 
@@ -34,14 +27,14 @@ public class WeatherForecastControllerTest
     public async Task CreateWeatherForecastByAPI_Then_ReturnJsonAndDeserialiceToIEnumerable_NotNullAndOneOrMoreResults()
     {
 
-        var client = _apiConnection.ApiClient;
+        var client = apiConnection.ApiClient;
         var weather = new CreateWeatherForecastRequest
         {
             Celsius = 1,
             Fahrenheit = 2,
             Descripcion = "Grados en Bilbao"
         };
-        var response = await client.PostAsJsonAsync<CreateWeatherForecastRequest>("WeatherForecast/create", weather);
+        var response = await client.PostAsJsonAsync("WeatherForecast/create", weather);
         response.Should().Match(x => x.IsSuccessStatusCode);
     }
 }
