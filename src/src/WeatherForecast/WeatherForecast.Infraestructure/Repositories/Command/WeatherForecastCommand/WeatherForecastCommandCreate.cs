@@ -1,20 +1,21 @@
-﻿using System.Text.Json;
-using WeatherForecast.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts;
-using AutoMapper;
+﻿using WeatherForecast.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts;
 using Infraestructure.MongoDatabase.MongoDbEntities;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
+using WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
 
 namespace WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
 
-public class WeatherForecastCommandCreate(MongoClient mongoClient, IDistributedCache distributedCache, ILogger<WeatherForecastCommandCreate> logger, IMapper mapper) 
+public class WeatherForecastCommandCreate(MongoClient mongoClient, IDistributedCache distributedCache, ILogger<WeatherForecastCommandCreate> logger) 
 : IWeatherForecastCommandCreateContract
 {
+    private readonly WeatherForecastCommandCreateMapper weatherCommandMapper = new();
+
     public async Task<int> ExecuteAsync(WeatherForecastCommandCreateRequest weather, CancellationToken cancellationToken = default)
     {
-        var weatherForecast = mapper.Map<WeatherForecastEntity>(weather);
+        var weatherForecast = weatherCommandMapper.WeatherRequestToEntity(weather);
 
         weatherForecast.Date = DateTime.Now;
 

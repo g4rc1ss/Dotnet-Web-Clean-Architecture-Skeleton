@@ -1,19 +1,21 @@
 ﻿using System.Text.Json;
 using WeatherForecast.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts;
-using AutoMapper;
 using Infraestructure.MongoDatabase.MongoDbEntities;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
+using WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
 
 namespace WeatherForecast.Infraestructure.Repositories.Query.WeatherForecastQueries;
 
-internal class WeatherForecastQueryAll(ILogger<WeatherForecastQueryAll> logger, IMapper mapper, IDistributedCache distributedCache, MongoClient mongoClient) : IWeatherForecastQueryAllContract
+internal class WeatherForecastQueryAll(ILogger<WeatherForecastQueryAll> logger, IDistributedCache distributedCache, MongoClient mongoClient) : IWeatherForecastQueryAllContract
 {
+    private readonly WeatherForecastQueryAllMapper weatherQueryAllMapper = new();
+
     public async Task<List<WeatherForecastQueryAllResponse>> ExecuteAsync(CancellationToken cancellationToken = default)
     {
-        var weatherList = new List<WeatherForecastQueryAllResponse>();
+        var weatherList = default(IEnumerable<WeatherForecastQueryAllResponse>);
         var cacheWeatherList = await distributedCache.GetStringAsync("WeatherForecasts", cancellationToken);
 
         if (string.IsNullOrEmpty(cacheWeatherList))
@@ -23,7 +25,7 @@ internal class WeatherForecastQueryAll(ILogger<WeatherForecastQueryAll> logger, 
             var find = await collection.FindAsync(FilterDefinition<WeatherForecastEntity>.Empty, cancellationToken: cancellationToken);
             var weathers = await find.ToListAsync(cancellationToken: cancellationToken);
 
-            weatherList = mapper.Map<List<WeatherForecastQueryAllResponse>>(weathers);
+            weatherList = weathers.Select(x => weatherQueryAllMapper.WeatherForecastEntityToQueryAll(x));
             cacheWeatherList = JsonSerializer.Serialize(weatherList);
             await distributedCache.SetStringAsync("WeatherForecasts", cacheWeatherList, cancellationToken);
         }
@@ -32,6 +34,6 @@ internal class WeatherForecastQueryAll(ILogger<WeatherForecastQueryAll> logger, 
             weatherList = JsonSerializer.Deserialize<List<WeatherForecastQueryAllResponse>>(cacheWeatherList);
         }
         logger.LogInformation("Devolviendo los datos: {@datos}", weatherList);
-        return weatherList!;
+        return weatherList!.ToList();
     }
 }

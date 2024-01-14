@@ -18,7 +18,6 @@
 		<PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.7.0" />
 		<PackageReference Include="OpenTelemetry.Instrumentation.Process" Version="1.0.0-alpha.6" />
 		<PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.7.0" />
-		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\WeatherForecast\WeatherForecast.API\WeatherForecast.API.csproj">

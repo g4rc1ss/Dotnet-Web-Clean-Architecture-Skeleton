@@ -1,23 +1,26 @@
 ﻿using WeatherForecast.Interfaces.ApplicationCore;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WeatherForecast.Shared.Peticiones.Responses.WeatherForecast;
 using WeatherForecast.Shared.Peticiones.Request;
 using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 using Microsoft.Extensions.Logging;
+using WeatherForecast.API.MapperProfiles.WeatherForecast;
 
 namespace WeatherForecast.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class WeatherForecastController(IMapper mapper, ICreateWeatherForecastContract createWeatherForecast, IGetAllWeatherForecastContract getAllWeatherForecast, ILogger<WeatherForecastController> logger)
+public class WeatherForecastController(ICreateWeatherForecastContract createWeatherForecast, IGetAllWeatherForecastContract getAllWeatherForecast, ILogger<WeatherForecastController> logger)
 : Controller
 {
+    private readonly WeatherForecastCreateMapper weatherForecastCreateMapper= new();
+    private readonly WeatherForecastQueryMapper weatherForecastQueryMapper = new();
+
     [HttpGet("all")]
     public async Task<IActionResult> GetWeatherForecast()
     {
         var weatherForecast = await getAllWeatherForecast.ExecuteAsync();
-        var weatherResponse = mapper.Map<IEnumerable<WeatherForecastResponse>>(weatherForecast);
+        var weatherResponse = weatherForecast.Select(x => weatherForecastQueryMapper.WeatherForecastQueryAllToResponse(x));
         logger.LogInformation("Respuesta de consulta all weather {@weatherForecast}", weatherForecast);
         
         return Json(weatherResponse);
@@ -26,7 +29,7 @@ public class WeatherForecastController(IMapper mapper, ICreateWeatherForecastCon
     [HttpPost("create")]
     public async Task<IActionResult> CreateWeatherForecast(CreateWeatherForecastRequest weatherForecast)
     {
-        var newWeather = mapper.Map<WeatherForecastCommandCreateRequest>(weatherForecast);
+        var newWeather = weatherForecastCreateMapper.WeatherForecastRequestToCommandRequest(weatherForecast);
         var createWeather = await createWeatherForecast.ExecuteAsync(newWeather);
         logger.LogInformation("Respuesta de create weather {@createWeather}", createWeather);
 
