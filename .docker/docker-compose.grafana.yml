@@ -14,11 +14,23 @@ services:
       - GF_USERS_ALLOW_SIGN_UP=${GF_USERS_ALLOW_SIGN_UP_SKELETON}
     volumes:
       - ./Observability/grafana/grafana.yaml:/etc/grafana/provisioning/datasources/all.yaml
-      - ./Observability/grafana/grafanaDotnetDashboard.json:/etc/grafana/provisioning/dashboards/dashboard.json
       - grafana_metrics_data:/var/lib/grafana
     ports:
       - 3000:3000
 
+
+  prometheus-opentelemetry:
+    image: prom/prometheus:latest
+    container_name: prometheus_opentelemetry
+    networks:
+      - telemetryNetwork
+    volumes:
+      - ./Observability/grafana/prometheus.yaml:/etc/prometheus/prometheus.yml
+      - prometheus_metrics_data:/prometheus
+    ports:
+      - 9090:9090
+
 volumes:
   grafana_metrics_data:
+  prometheus_metrics_data:
   

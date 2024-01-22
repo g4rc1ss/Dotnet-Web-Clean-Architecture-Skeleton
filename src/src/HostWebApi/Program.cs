@@ -1,5 +1,4 @@
 ﻿using HostWebApi.Extensions;
-using MongoDB.Driver;
 using User.API;
 using WeatherForecast.API;
 

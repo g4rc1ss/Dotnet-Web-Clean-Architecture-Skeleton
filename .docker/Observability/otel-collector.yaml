@@ -7,17 +7,10 @@ receivers:
 
 # Configure exporters
 exporters:
-  # Export prometheus endpoint
-  prometheus:
-    endpoint: "0.0.0.0:8889"
-
-  # log to the console
-  logging:
-
-  # Export to zipkin
-  zipkin:
-    endpoint: "http://zipkin-opentelemetry:9411/api/v2/spans"
-    format: proto
+  otlphttp:
+    endpoint: 
+    headers: 
+      Authorization: 
 
 # https://opentelemetry.io/docs/collector/configuration/#processors
 processors:
@@ -30,12 +23,12 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging, zipkin]
+      exporters: [otlphttp]
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging, prometheus]
+      exporters: [otlphttp]
     logs:
       receivers: [otlp]
       processors: []
-      exporters: [logging]
+      exporters: [otlphttp]

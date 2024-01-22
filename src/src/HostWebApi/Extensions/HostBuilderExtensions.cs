@@ -4,6 +4,8 @@ using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Events;
 using OpenTelemetry.Exporter;
+using System.Text.Json.Serialization;
+using Serilog.Sinks.OpenTelemetry;
 
 namespace HostWebApi.Extensions;
 
@@ -17,7 +19,10 @@ public static class HostBuilderExtensions
             loggerConfiguration
                 .MinimumLevel.Information()
                 .Enrich.WithProperty("Application", "HostWebApi")
-                .WriteTo.Seq(configuration["ConnectionStrings:SeqLogs"]!);
+                .WriteTo.OpenTelemetry(options =>
+                {
+                    options.Endpoint = configuration["ConnectionStrings:OpenTelemetry"]!;
+                });
 
             if (context.HostingEnvironment.IsDevelopment())
             {
