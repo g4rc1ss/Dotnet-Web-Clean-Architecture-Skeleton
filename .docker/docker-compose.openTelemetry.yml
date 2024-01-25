@@ -6,8 +6,9 @@ networks:
 
 services:
   opentelemetry-collector:
-    image: otel/opentelemetry-collector:latest
+    image: otel/opentelemetry-collector-contrib:latest
     container_name: opentelemetry_collector
+    restart: always
     networks:
       - telemetryNetwork
     command: [ "--config=/etc/otel-collector.yaml" ]

@@ -43,6 +43,10 @@ public static class HostBuilderExtensions
             .WithTracing(trace =>
             {
                 trace.AddAspNetCoreInstrumentation();
+                trace.AddHttpClientInstrumentation();
+                trace.AddRedisInstrumentation();
+                trace.AddEntityFrameworkCoreInstrumentation();
+                trace.AddMongoDBInstrumentation();
                 trace.AddOtlpExporter(exporter =>
                 {
                     exporter.Endpoint = new Uri(configuration["ConnectionStrings:OpenTelemetry"]!);

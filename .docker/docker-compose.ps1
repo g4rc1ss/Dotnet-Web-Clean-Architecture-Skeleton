@@ -12,14 +12,21 @@ param (
     [string]$removeVolumes
 )
 
-$composeToExecuteAlways = (
-    "docker-compose.grafana.yml",
+$composeToExecuteAlways = @(
     "docker-compose.mongo.yml",
     "docker-compose.openTelemetry.yml"
 );
 
+
+$composeToExecuteOnTest = @(
+    "docker-compose.app.yml"
+);
+
+$composeToExecuteOnLocal = @(
+    "docker-compose.grafana.yml"
+);
+
 $commadDockerComposeToExecute = "docker compose"
-$dockerComposeDotnetAppCommand = "docker-compose.app.yml"
 $enviromentFile = ".env.$environment"
 
 
@@ -29,9 +36,18 @@ foreach ($dockerComposeFile in $composeToExecuteAlways) {
     $commadDockerComposeToExecute += " -f $dockerComposeFile";
 }
 
+
+if ($environment -eq "local") {
+    foreach ($dockerComposeFile in $composeToExecuteOnLocal) {
+        $commadDockerComposeToExecute += " -f $dockerComposeFile";
+    }
+}
+
 if ($environment -eq "test") {
-    $commadDockerComposeToExecute += " -f $dockerComposeDotnetAppCommand";
-    
+    foreach ($dockerComposeFile in $composeToExecuteOnTest) {
+        $commadDockerComposeToExecute += " -f $dockerComposeFile";
+    }
+
     if ($action -eq "up") {
         $buildExec = "$commadDockerComposeToExecute build" 
         Write-Output $buildExec
@@ -45,7 +61,10 @@ if ($action -eq "up") {
 }
 elseif ($action -eq "down") {
     $commadDockerComposeToExecute += " down"
-    $commadDockerComposeToExecute += $removeVolumes -eq "v" ? " -v" : ""
+
+    if ($removeVolumes -eq "v") {
+        $commadDockerComposeToExecute += " -v"
+    }
 
 }
 

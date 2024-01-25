@@ -5,16 +5,17 @@ namespace User.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UserController : Controller
+public class UserController(IHttpClientFactory httpClientFactory)
+ : Controller
 {
-    public UserController()
-    {
-    }
 
     [HttpGet("user")]
-    public IActionResult EndpointUser()
+    public async Task<IActionResult> EndpointUser()
     {
-        return Ok("Hola guapo");
+        using var httpClient = httpClientFactory.CreateClient();
+        var google = await httpClient.GetAsync("https://google.es");
+        var response = await google.Content.ReadAsStreamAsync();
+        return Ok(response.Length);
     }
 }
 

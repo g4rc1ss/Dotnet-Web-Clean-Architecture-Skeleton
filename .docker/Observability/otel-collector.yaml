@@ -7,10 +7,41 @@ receivers:
 
 # Configure exporters
 exporters:
-  otlphttp:
-    endpoint: 
-    headers: 
-      Authorization: 
+
+ #######
+# LOCAL #
+ #######
+  # prometheus:
+  #   endpoint: 0.0.0.0:8889
+  #   send_timestamps: true
+  
+  # loki:
+  #   endpoint: http://loki-grafana:3100/loki/api/v1/push
+  #   tls:
+  #     insecure: true
+
+  # otlp/1:
+  #   endpoint: tempo-grafana:4317
+  #   tls:
+  #     insecure: true
+
+ ###############
+# GRAFANA CLOUD #
+ ###############
+
+  prometheus:
+    endpoint: 0.0.0.0:8889
+    send_timestamps: true
+  
+  loki:
+    endpoint: http://loki-grafana:3100/loki/api/v1/push
+    tls:
+      insecure: true
+
+  otlp/1:
+    endpoint: tempo-grafana:4317
+    tls:
+      insecure: true
 
 # https://opentelemetry.io/docs/collector/configuration/#processors
 processors:
@@ -23,12 +54,12 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [otlphttp]
+      exporters: [otlp/1]
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [otlphttp]
+      exporters: [prometheus]
     logs:
       receivers: [otlp]
       processors: []
-      exporters: [otlphttp]
+      exporters: [loki]

@@ -8,6 +8,7 @@ builder.Host.AddLoggerConfiguration(builder.Configuration);
 builder.Services.AddOpenTelemetry(builder.Configuration);
 
 // Add services to the container.
+builder.Services.AddHttpClient();
 builder.Services.InicializarConfiguracionApp(builder.Configuration);
 builder.Services.AddProblemDetails();
 
