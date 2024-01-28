@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   dotnetapp:
+    container_name: HostWebApi
     restart: always
     build:
       context: ../src
@@ -20,7 +21,6 @@ services:
       - keysFolder=${keysFolder_SKELETON}
       - ConnectionStrings__CleanArchitectureSkeletonMongoDb=${ConnectionStrings__CleanArchitectureSkeletonMongoDb_SKELETON}
       - ConnectionStrings__OpenTelemetry=${ConnectionStrings__OpenTelemetry_SKELETON}
-      - ConnectionStrings__SeqLogs=${ConnectionStrings__SeqLogs_SKELETON}
     ports:
       - "${HTTP_PORT_SKELETON}:80"
       - "${HTTPS_PORT_SKELETON}:443"
