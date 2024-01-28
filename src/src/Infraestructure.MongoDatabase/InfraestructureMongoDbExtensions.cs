@@ -11,9 +11,9 @@ public static class InfraestructureMongoDbExtensions
     public static IServiceCollection AddMongoDbConfig(this IServiceCollection services, IConfiguration configuration)
     {
         var host = configuration.GetConnectionString("CleanArchitectureSkeletonMongoDb");
-        var clientSettings = MongoClientSettings.FromConnectionString(host);
-        clientSettings.ClusterConfigurator = cb => cb.Subscribe(new DiagnosticsActivityEventSubscriber());
-        services.AddScoped(provider => new MongoClient(clientSettings));
+        // var clientSettings = MongoClientSettings.FromConnectionString(host);
+        // clientSettings.ClusterConfigurator = cb => cb.Subscribe(new DiagnosticsActivityEventSubscriber());
+        services.AddScoped(provider => new MongoClient(host));
 
         return services;
     }
