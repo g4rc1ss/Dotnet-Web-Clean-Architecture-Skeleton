@@ -27,12 +27,24 @@ jobs:
     - name: Read .env
       run: more ./src/.env.dev
 
-    - name: Ejecutar comando de PowerShell
+    - name: Ejecutar docker test
       run: |
         cd .docker
         ls -la
         pwsh -File ./docker-compose.ps1 up test
+        cd ..
+    
+    - name: Eliminar docker test
+      run: |
+        cd .docker
+        ls -la
         pwsh -File ./docker-compose.ps1 down test v
+        cd ..
+
+    - name: Crear docker local
+      run: |
+        cd .docker
+        ls -la
         pwsh -File ./docker-compose.ps1 up local
         cd ..
     
