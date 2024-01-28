@@ -31,8 +31,6 @@ services:
     depends_on:
       - mongodb
       - opentelemetry-collector
-      - prometheus-opentelemetry
-      - seq-logs
 
 volumes:
   dotnetapp_keys_data:
