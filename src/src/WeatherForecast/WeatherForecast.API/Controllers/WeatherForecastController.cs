@@ -19,7 +19,6 @@ public class WeatherForecastController(ICreateWeatherForecastContract createWeat
     [HttpGet("all")]
     public async Task<IActionResult> GetWeatherForecast()
     {
-        logger.LogInformation("Obtener weatherForecast de {MerchantId} y {TerminalId}", "1234567890", 21);
         var weatherForecast = await getAllWeatherForecast.ExecuteAsync();
         var weatherResponse = weatherForecast.Select(x => weatherForecastQueryMapper.WeatherForecastQueryAllToResponse(x));
         logger.LogInformation("Respuesta de consulta all weather {@weatherForecast}", weatherForecast);
