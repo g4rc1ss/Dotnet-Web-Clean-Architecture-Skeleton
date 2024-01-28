@@ -1,14 +1,14 @@
 ﻿using WeatherForecast.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts;
 using Infraestructure.MongoDatabase.MongoDbEntities;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 using WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
+using DistributedCacheCleanArchitecture;
 
 namespace WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
 
-public class WeatherForecastCommandCreate(MongoClient mongoClient, IDistributedCache distributedCache, ILogger<WeatherForecastCommandCreate> logger) 
+public class WeatherForecastCommandCreate(MongoClient mongoClient, IDistributedCleanArchitectureCache distributedCache, ILogger<WeatherForecastCommandCreate> logger) 
 : IWeatherForecastCommandCreateContract
 {
     private readonly WeatherForecastCommandCreateMapper weatherCommandMapper = new();

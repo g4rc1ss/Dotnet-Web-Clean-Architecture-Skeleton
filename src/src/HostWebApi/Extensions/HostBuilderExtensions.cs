@@ -6,6 +6,7 @@ using Serilog.Events;
 using OpenTelemetry.Exporter;
 using System.Text.Json.Serialization;
 using Serilog.Sinks.OpenTelemetry;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace HostWebApi.Extensions;
 
@@ -44,9 +45,8 @@ public static class HostBuilderExtensions
             {
                 trace.AddAspNetCoreInstrumentation();
                 trace.AddHttpClientInstrumentation();
-                trace.AddRedisInstrumentation();
-                trace.AddEntityFrameworkCoreInstrumentation();
                 trace.AddMongoDBInstrumentation();
+                trace.AddSource(nameof(IDistributedCache));
                 trace.AddOtlpExporter(exporter =>
                 {
                     exporter.Endpoint = new Uri(configuration["ConnectionStrings:OpenTelemetry"]!);

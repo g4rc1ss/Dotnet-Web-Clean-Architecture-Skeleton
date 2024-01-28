@@ -7,7 +7,7 @@ services:
     container_name: Grafana
     image: grafana/grafana
     networks:
-      - telemetryNetwork
+      - cleanArchitectureNetwork
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
     volumes:
@@ -20,7 +20,7 @@ services:
     image: prom/prometheus:latest
     container_name: Grafana_Prometheus
     networks:
-      - telemetryNetwork
+      - cleanArchitectureNetwork
     volumes:
       - ./Observability/grafana/prometheus.yaml:/etc/prometheus/prometheus.yml
       - prometheus_metrics_data:/prometheus
@@ -32,7 +32,7 @@ services:
     container_name: Grafana_Loki
     command: -config.file=/etc/loki/local-config.yaml
     networks:
-      - telemetryNetwork
+      - cleanArchitectureNetwork
     volumes:
       - ./Observability/grafana/loki.yaml:/etc/loki/local-config.yaml
     ports:
@@ -43,7 +43,7 @@ services:
     image: grafana/tempo:latest
     command: [ "-config.file=/etc/tempo.yaml" ]
     networks:
-      - telemetryNetwork
+      - cleanArchitectureNetwork
     volumes:
       - ./Observability/grafana/tempo.yaml:/etc/tempo.yaml
       - tempo_data:/tmp/tempo

@@ -27,7 +27,7 @@ services:
     volumes:
       - dotnetapp_keys_data:${keysFolder_SKELETON}
     networks:
-      - telemetryNetwork
+      - cleanArchitectureNetwork
     depends_on:
       - mongodb
       - opentelemetry-collector
