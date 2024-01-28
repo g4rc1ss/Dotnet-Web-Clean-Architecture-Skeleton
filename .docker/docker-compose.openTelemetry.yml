@@ -1,76 +1,21 @@
 ﻿version: '3.8'
 
 networks:
-  telemetryNetwork:
+  cleanArchitectureNetwork:
     driver: bridge
 
 services:
-
- ########
-## Logs ##
- ########
-
-  seq-logs:
-    container_name: seq_logging
-    image: datalust/seq:latest
-    networks:
-      - telemetryNetwork
-    ports:
-      - 5341:80
-      - "5342:5342"
-      - "45341:45341"
-    environment:
-      - ACCEPT_EULA=Y
-    volumes:
-      - seq_data:/data
-
- ############
-## End Logs ##
- ############
-
- ###########################
-# Telemetry configuration #
-###########################
-
   opentelemetry-collector:
-    image: otel/opentelemetry-collector:latest
+    image: otel/opentelemetry-collector-contrib:latest
     container_name: opentelemetry_collector
+    restart: always
     networks:
-      - telemetryNetwork
-    command: [ "--config=/etc/openTelemetry.yaml" ]
+      - cleanArchitectureNetwork
+    command: [ "--config=/etc/otel-collector.yaml" ]
     volumes:
-      - ./Observability/openTelemetry.yaml:/etc/openTelemetry.yaml
+      - ./Observability/otel-collector.yaml:/etc/otel-collector.yaml
     ports:
       - "8888:8888"   # Prometheus metrics exposed by the collector
       - "8889:8889"   # Prometheus exporter metrics
       - "4317:4317"   # OTLP gRPC receiver
-
-
-  prometheus-opentelemetry:
-    image: prom/prometheus:latest
-    container_name: prometheus_opentelemetry
-    networks:
-      - telemetryNetwork
-    volumes:
-      - ./Observability/prometheus.yaml:/etc/prometheus/prometheus.yml
-      - prometheus_metrics_data:/prometheus
-    ports:
-      - 9090:9090
-
-  zipkin-opentelemetry:
-    image: openzipkin/zipkin:latest
-    container_name: zipkin_opentelemetry
-    networks:
-      - telemetryNetwork
-    ports:
-      - "9411:9411"
-
-###############################
-# Telemetry configuration end #
-###############################
-
-volumes:
-  prometheus_metrics_data:
-  grafana_metrics_data:
-  seq_data:
   

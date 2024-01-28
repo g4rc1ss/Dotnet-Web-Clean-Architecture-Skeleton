@@ -4,6 +4,9 @@ using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Events;
 using OpenTelemetry.Exporter;
+using System.Text.Json.Serialization;
+using Serilog.Sinks.OpenTelemetry;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace HostWebApi.Extensions;
 
@@ -17,7 +20,10 @@ public static class HostBuilderExtensions
             loggerConfiguration
                 .MinimumLevel.Information()
                 .Enrich.WithProperty("Application", "HostWebApi")
-                .WriteTo.Seq(configuration["ConnectionStrings:SeqLogs"]!);
+                .WriteTo.OpenTelemetry(options =>
+                {
+                    options.Endpoint = configuration["ConnectionStrings:OpenTelemetry"]!;
+                });
 
             if (context.HostingEnvironment.IsDevelopment())
             {
@@ -38,6 +44,9 @@ public static class HostBuilderExtensions
             .WithTracing(trace =>
             {
                 trace.AddAspNetCoreInstrumentation();
+                trace.AddHttpClientInstrumentation();
+                trace.AddMongoDBInstrumentation();
+                trace.AddSource(nameof(IDistributedCache));
                 trace.AddOtlpExporter(exporter =>
                 {
                     exporter.Endpoint = new Uri(configuration["ConnectionStrings:OpenTelemetry"]!);

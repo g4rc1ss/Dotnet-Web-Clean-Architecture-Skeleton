@@ -2,6 +2,8 @@ version: '3.8'
 
 services:
   dotnetapp:
+    container_name: HostWebApi
+    restart: always
     build:
       context: ../src
       dockerfile: dockerfile
@@ -19,20 +21,16 @@ services:
       - keysFolder=${keysFolder_SKELETON}
       - ConnectionStrings__CleanArchitectureSkeletonMongoDb=${ConnectionStrings__CleanArchitectureSkeletonMongoDb_SKELETON}
       - ConnectionStrings__OpenTelemetry=${ConnectionStrings__OpenTelemetry_SKELETON}
-      - ConnectionStrings__SeqLogs=${ConnectionStrings__SeqLogs_SKELETON}
     ports:
       - "${HTTP_PORT_SKELETON}:80"
       - "${HTTPS_PORT_SKELETON}:443"
     volumes:
       - dotnetapp_keys_data:${keysFolder_SKELETON}
     networks:
-      - telemetryNetwork
+      - cleanArchitectureNetwork
     depends_on:
       - mongodb
       - opentelemetry-collector
-      - prometheus-opentelemetry
-      - zipkin-opentelemetry
-      - seq-logs
 
 volumes:
   dotnetapp_keys_data:

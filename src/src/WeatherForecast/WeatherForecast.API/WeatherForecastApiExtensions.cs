@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WeatherForecast.Infraestructure;
+using DistributedCacheCleanArchitecture;
 
 namespace WeatherForecast.API;
 
@@ -11,19 +12,13 @@ public static class WeatherForecastApiExtensions
     public static IServiceCollection InicializarConfiguracionApp(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddOptions();
-        services.AddCache(configuration);
+        services.AddDistributedCache(configuration);
         services.ConfigureDataProtectionProvider(configuration);
 
 
         services.AddBusinessServices();
         services.AddDataAccessService(configuration);
 
-        return services;
-    }
-
-    public static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddDistributedMemoryCache();
         return services;
     }
 
