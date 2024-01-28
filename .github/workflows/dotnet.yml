@@ -32,6 +32,8 @@ jobs:
         cd .docker
         ls -la
         pwsh -File ./docker-compose.ps1 up test
+        pwsh -File ./docker-compose.ps1 down test v
+        pwsh -File ./docker-compose.ps1 up local
         cd ..
     
     - name: Test
