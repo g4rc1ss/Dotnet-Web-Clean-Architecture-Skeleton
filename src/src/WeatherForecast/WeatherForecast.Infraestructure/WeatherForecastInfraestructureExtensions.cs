@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WeatherForecast.Infraestructure.Repositories.Query.WeatherForecastQueries;
 using WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
+using MediatR;
 
 namespace WeatherForecast.Infraestructure;
 
@@ -14,6 +15,7 @@ public static class WeatherForecastInfraestructureExtensions
     {
         services.AddMongoDbConfig(configuration);
         services.AddRepositoryServices();
+        services.AddMediatR(typeof(WeatherForecastInfraestructureExtensions));
 
         return services;
     }

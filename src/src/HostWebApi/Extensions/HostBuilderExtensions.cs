@@ -7,6 +7,7 @@ using OpenTelemetry.Exporter;
 using System.Text.Json.Serialization;
 using Serilog.Sinks.OpenTelemetry;
 using Microsoft.Extensions.Caching.Distributed;
+using WeatherForecast.Infraestructure;
 
 namespace HostWebApi.Extensions;
 
@@ -43,6 +44,7 @@ public static class HostBuilderExtensions
             })
             .WithTracing(trace =>
             {
+                trace.AddSource(nameof(WeatherForecastSyncHandler));
                 trace.AddAspNetCoreInstrumentation();
                 trace.AddHttpClientInstrumentation();
                 trace.AddMongoDBInstrumentation();

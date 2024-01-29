@@ -5,10 +5,12 @@ using MongoDB.Driver;
 using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 using WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
 using DistributedCacheCleanArchitecture;
+using MediatR;
 
 namespace WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
 
-public class WeatherForecastCommandCreate(MongoClient mongoClient, IDistributedCleanArchitectureCache distributedCache, ILogger<WeatherForecastCommandCreate> logger) 
+public class WeatherForecastCommandCreate(MongoClient mongoClient,
+    IDistributedCleanArchitectureCache distributedCache, ILogger<WeatherForecastCommandCreate> logger, IMediator mediator) 
 : IWeatherForecastCommandCreateContract
 {
     private readonly WeatherForecastCommandCreateMapper weatherCommandMapper = new();
@@ -27,6 +29,9 @@ public class WeatherForecastCommandCreate(MongoClient mongoClient, IDistributedC
         logger.LogInformation("Guardando los datos en BBDD: {@datos}", weatherForecast);
 
         await distributedCache.RemoveAsync("WeatherForecasts", cancellationToken);
+
+        await mediator.Publish(new WeatherForecastSyncRequest(), cancellationToken);
+        logger.LogInformation("Evento de creacion de WeatherForecast ejecutado");
 
         return 1;
     }
