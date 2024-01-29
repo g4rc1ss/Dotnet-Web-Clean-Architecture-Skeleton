@@ -30,7 +30,7 @@ public class WeatherForecastCommandCreate(MongoClient mongoClient,
 
         await distributedCache.RemoveAsync("WeatherForecasts", cancellationToken);
 
-        await mediator.Publish(new WeatherForecastSyncRequest(), cancellationToken);
+        _ = mediator.Publish(new WeatherForecastSyncRequest(), cancellationToken);
         logger.LogInformation("Evento de creacion de WeatherForecast ejecutado");
 
         return 1;
