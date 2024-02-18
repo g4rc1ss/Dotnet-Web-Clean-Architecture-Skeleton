@@ -1,4 +1,6 @@
-﻿using HostWebApi.Extensions;
+﻿using System.Threading.RateLimiting;
+using HostWebApi.Extensions;
+using Microsoft.AspNetCore.RateLimiting;
 using User.API;
 using WeatherForecast.API;
 
@@ -33,6 +35,18 @@ if (!app.Environment.IsProduction())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseRateLimiter(new RateLimiterOptions
+{
+    GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpcontext =>
+        RateLimitPartition.GetConcurrencyLimiter("Partition Key",
+        _ => new ConcurrencyLimiterOptions()
+        {
+            PermitLimit = 10,
+            QueueLimit = 0,
+            QueueProcessingOrder = QueueProcessingOrder.OldestFirst
+        })
+    )
+});
 
 app.UseHttpLogging();
 
