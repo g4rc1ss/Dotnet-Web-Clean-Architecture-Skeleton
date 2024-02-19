@@ -22,6 +22,18 @@ builder.Services.AddControllers()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddRateLimiter(rateLimiter =>
+{
+    rateLimiter.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpcontext =>
+        RateLimitPartition.GetConcurrencyLimiter("Partition Key",
+        _ => new ConcurrencyLimiterOptions()
+        {
+            PermitLimit = 10,
+            QueueLimit = 0,
+            QueueProcessingOrder = QueueProcessingOrder.OldestFirst
+        })
+    );
+});
 builder.Services.AddHttpLogging(o => { });
 
 var app = builder.Build();
@@ -35,18 +47,7 @@ if (!app.Environment.IsProduction())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-app.UseRateLimiter(new RateLimiterOptions
-{
-    GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpcontext =>
-        RateLimitPartition.GetConcurrencyLimiter("Partition Key",
-        _ => new ConcurrencyLimiterOptions()
-        {
-            PermitLimit = 10,
-            QueueLimit = 0,
-            QueueProcessingOrder = QueueProcessingOrder.OldestFirst
-        })
-    )
-});
+app.UseRateLimiter();
 
 app.UseHttpLogging();
 
