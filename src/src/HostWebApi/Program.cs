@@ -1,7 +1,9 @@
 ﻿using System.Threading.RateLimiting;
+
 using HostWebApi.Extensions;
-using Microsoft.AspNetCore.RateLimiting;
+
 using User.API;
+
 using WeatherForecast.API;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,9 +24,7 @@ builder.Services.AddControllers()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddRateLimiter(rateLimiter =>
-{
-    rateLimiter.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpcontext =>
+builder.Services.AddRateLimiter(rateLimiter => rateLimiter.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpcontext =>
         RateLimitPartition.GetConcurrencyLimiter("Partition Key",
         _ => new ConcurrencyLimiterOptions()
         {
@@ -32,8 +32,7 @@ builder.Services.AddRateLimiter(rateLimiter =>
             QueueLimit = 0,
             QueueProcessingOrder = QueueProcessingOrder.OldestFirst
         })
-    );
-});
+    ));
 builder.Services.AddHttpLogging(o => { });
 
 var app = builder.Build();

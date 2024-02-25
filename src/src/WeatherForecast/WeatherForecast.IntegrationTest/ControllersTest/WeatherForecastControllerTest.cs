@@ -1,16 +1,19 @@
 ﻿using System.Net.Http.Json;
+
 using FluentAssertions;
+
 using WeatherForecast.Shared.Peticiones.Request;
 using WeatherForecast.Shared.Peticiones.Responses.WeatherForecast;
+
 using Xunit;
 
 namespace WeatherForecast.IntegrationTest.ControllersTest;
 
-[Collection(FixtureWeatherForecastNamesConstants.WeatherForecastTest)]
+[Collection(FixtureWeatherForecastNamesConstants.WEATHERFORECASTTEST)]
 public class WeatherForecastControllerTest(TestApiConnectionInitializer apiConnection)
 {
     [Fact]
-    public async Task GetWeatherForecastByAPI_Then_ReturnJsonAndDeserialiceToIEnumerable_NotNullAndOneOrMoreResults()
+    public async Task GetWeatherForecastByAPIThenReturnJsonAndDeserialiceToIEnumerableNotNullAndOneOrMoreResults()
     {
 
         var client = apiConnection.ApiClient;
@@ -24,7 +27,7 @@ public class WeatherForecastControllerTest(TestApiConnectionInitializer apiConne
     }
 
     [Fact]
-    public async Task CreateWeatherForecastByAPI_Then_ReturnJsonAndDeserialiceToIEnumerable_NotNullAndOneOrMoreResults()
+    public async Task CreateWeatherForecastByAPIThenReturnJsonAndDeserialiceToIEnumerableNotNullAndOneOrMoreResults()
     {
 
         var client = apiConnection.ApiClient;

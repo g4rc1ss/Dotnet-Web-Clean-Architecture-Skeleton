@@ -5,14 +5,13 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
 using WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
-using System.Diagnostics;
 using DistributedCacheCleanArchitecture;
 
 namespace WeatherForecast.Infraestructure.Repositories.Query.WeatherForecastQueries;
 
 internal class WeatherForecastQueryAll(ILogger<WeatherForecastQueryAll> logger, IDistributedCleanArchitectureCache distributedCache, MongoClient mongoClient) : IWeatherForecastQueryAllContract
 {
-    private readonly WeatherForecastQueryAllMapper weatherQueryAllMapper = new();
+    private readonly WeatherForecastQueryAllMapper _weatherQueryAllMapper = new();
 
     public async Task<List<WeatherForecastQueryAllResponse>> ExecuteAsync(CancellationToken cancellationToken = default)
     {
@@ -27,7 +26,7 @@ internal class WeatherForecastQueryAll(ILogger<WeatherForecastQueryAll> logger, 
             var find = await collection.FindAsync(FilterDefinition<WeatherForecastEntity>.Empty, cancellationToken: cancellationToken);
             var weathers = await find.ToListAsync(cancellationToken: cancellationToken);
 
-            weatherList = weathers.Select(x => weatherQueryAllMapper.WeatherForecastEntityToQueryAll(x));
+            weatherList = weathers.Select(_weatherQueryAllMapper.WeatherForecastEntityToQueryAll);
             cacheWeatherList = JsonSerializer.Serialize(weatherList);
 
             await distributedCache.SetStringAsync("WeatherForecasts", cacheWeatherList, cancellationToken);

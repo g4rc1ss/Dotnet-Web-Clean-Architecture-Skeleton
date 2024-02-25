@@ -6,18 +6,19 @@ using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 using WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
 using DistributedCacheCleanArchitecture;
 using MediatR;
+using WeatherForecast.Infraestructure.Events.WeatherForecastSyncConsumer;
 
 namespace WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
 
 public class WeatherForecastCommandCreate(MongoClient mongoClient,
-    IDistributedCleanArchitectureCache distributedCache, ILogger<WeatherForecastCommandCreate> logger, IMediator mediator) 
+    IDistributedCleanArchitectureCache distributedCache, ILogger<WeatherForecastCommandCreate> logger, IMediator mediator)
 : IWeatherForecastCommandCreateContract
 {
-    private readonly WeatherForecastCommandCreateMapper weatherCommandMapper = new();
+    private readonly WeatherForecastCommandCreateMapper _weatherCommandMapper = new();
 
     public async Task<int> ExecuteAsync(WeatherForecastCommandCreateRequest weather, CancellationToken cancellationToken = default)
     {
-        var weatherForecast = weatherCommandMapper.WeatherRequestToEntity(weather);
+        var weatherForecast = _weatherCommandMapper.WeatherRequestToEntity(weather);
 
         weatherForecast.Date = DateTime.Now;
 

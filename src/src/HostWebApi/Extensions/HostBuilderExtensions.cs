@@ -4,10 +4,8 @@ using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Events;
 using OpenTelemetry.Exporter;
-using System.Text.Json.Serialization;
-using Serilog.Sinks.OpenTelemetry;
 using Microsoft.Extensions.Caching.Distributed;
-using WeatherForecast.Infraestructure;
+using WeatherForecast.Infraestructure.Events.WeatherForecastSyncConsumer;
 
 namespace HostWebApi.Extensions;
 
@@ -21,10 +19,7 @@ public static class HostBuilderExtensions
             loggerConfiguration
                 .MinimumLevel.Information()
                 .Enrich.WithProperty("Application", "HostWebApi")
-                .WriteTo.OpenTelemetry(options =>
-                {
-                    options.Endpoint = configuration["ConnectionStrings:OpenTelemetry"]!;
-                });
+                .WriteTo.OpenTelemetry(options => options.Endpoint = configuration["ConnectionStrings:OpenTelemetry"]!);
 
             if (context.HostingEnvironment.IsDevelopment())
             {
@@ -38,10 +33,7 @@ public static class HostBuilderExtensions
     internal static IServiceCollection AddOpenTelemetry(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddOpenTelemetry()
-            .ConfigureResource(resource =>
-            {
-                resource.AddService(configuration["AppName"]!);
-            })
+            .ConfigureResource(resource => resource.AddService(configuration["AppName"]!))
             .WithTracing(trace =>
             {
                 trace.AddSource(nameof(WeatherForecastSyncHandler));
@@ -49,10 +41,7 @@ public static class HostBuilderExtensions
                 trace.AddHttpClientInstrumentation();
                 trace.AddMongoDBInstrumentation();
                 trace.AddSource(nameof(IDistributedCache));
-                trace.AddOtlpExporter(exporter =>
-                {
-                    exporter.Endpoint = new Uri(configuration["ConnectionStrings:OpenTelemetry"]!);
-                });
+                trace.AddOtlpExporter(exporter => exporter.Endpoint = new Uri(configuration["ConnectionStrings:OpenTelemetry"]!));
             })
             .WithMetrics(metric =>
             {

@@ -1,11 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace DistributedCacheCleanArchitecture;
 
 public static class DistributedCacheExtensions
 {
-    public static IServiceCollection AddDistributedCache(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDistributedCache(this IServiceCollection services)
     {
         services.AddScoped<IDistributedCleanArchitectureCache, DistributedCleanArchitectureCache>();
         services.AddDistributedMemoryCache();

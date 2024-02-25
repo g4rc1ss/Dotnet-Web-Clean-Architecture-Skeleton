@@ -1,5 +1,7 @@
 ﻿using Infraestructure.MongoDatabase.MongoDbEntities;
+
 using Riok.Mapperly.Abstractions;
+
 using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
 
 namespace WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;

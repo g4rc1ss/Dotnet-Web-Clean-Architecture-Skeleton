@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
@@ -24,7 +25,7 @@ public class DistributedCleanArchitectureCache(IDistributedCache distributedCach
         logger.LogInformation("Se procede a obtener de cache la key {@cacheKey}", key);
         return await distributedCache.GetStringAsync(key, cancellationToken);
     }
-    
+
     public async Task RemoveAsync(string key, CancellationToken cancellationToken)
     {
         using var trace = _tracingDistributedCache.StartActivity($"Remove Cache");

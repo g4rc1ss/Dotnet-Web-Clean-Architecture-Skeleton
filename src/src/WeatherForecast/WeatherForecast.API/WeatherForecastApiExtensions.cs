@@ -12,7 +12,7 @@ public static class WeatherForecastApiExtensions
     public static IServiceCollection InicializarConfiguracionApp(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddOptions();
-        services.AddDistributedCache(configuration);
+        services.AddDistributedCache();
         services.ConfigureDataProtectionProvider(configuration);
 
 
