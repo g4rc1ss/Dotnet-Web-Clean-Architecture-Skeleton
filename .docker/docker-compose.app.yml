@@ -22,8 +22,8 @@ services:
       - ConnectionStrings__CleanArchitectureSkeletonMongoDb=${ConnectionStrings__CleanArchitectureSkeletonMongoDb_SKELETON}
       - ConnectionStrings__OpenTelemetry=${ConnectionStrings__OpenTelemetry_SKELETON}
     ports:
-      - "${HTTP_PORT_SKELETON}:80"
-      - "${HTTPS_PORT_SKELETON}:443"
+      - "80:80"
+      - "443:443"
     volumes:
       - dotnetapp_keys_data:${keysFolder_SKELETON}
     networks:
