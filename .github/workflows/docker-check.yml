@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: Docker_build
 
 on:
   pull_request:
@@ -14,20 +14,15 @@ jobs:
     steps:
     - name: Setup Docker
       uses: docker/setup-buildx-action@v3
-    
-    - name: Read .env
-      run: more ./src/.env.dev
 
     - name: Ejecutar docker test
+      working-directory: ./.docker
       run: |
-        cd .docker
         ls -la
         pwsh -File ./docker-compose.ps1 up test
-        cd ..
     
     - name: Eliminar docker test
+      working-directory: ./.docker
       run: |
-        cd .docker
         ls -la
         pwsh -File ./docker-compose.ps1 down test v
-        cd ..
