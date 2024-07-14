@@ -4,8 +4,6 @@
 name: .NET
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -14,30 +12,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-
-    - name: Restore dependencies
-      run: dotnet restore ./src/
-
-    - name: Build
-      run: dotnet build --no-restore ./src/
-
     - name: Setup Docker
       uses: docker/setup-buildx-action@v3
     
     - name: Read .env
       run: more ./src/.env.dev
-      
-    - name: Crear docker local
+
+    - name: Ejecutar docker test
       run: |
         cd .docker
         ls -la
-        pwsh -File ./docker-compose.ps1 up local
+        pwsh -File ./docker-compose.ps1 up test
         cd ..
     
-    - name: Test
-      run: dotnet test --no-build --verbosity normal ./src/
+    - name: Eliminar docker test
+      run: |
+        cd .docker
+        ls -la
+        pwsh -File ./docker-compose.ps1 down test v
+        cd ..
