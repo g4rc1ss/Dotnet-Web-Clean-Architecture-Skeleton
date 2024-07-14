@@ -15,6 +15,10 @@ jobs:
     - name: Setup Docker
       uses: docker/setup-buildx-action@v3
 
+    - name: Listado directorio
+      run: |
+        ls -la
+
     - name: Ejecutar docker test
       working-directory: .docker
       run: |
