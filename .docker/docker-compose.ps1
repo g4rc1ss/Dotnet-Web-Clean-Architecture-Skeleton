@@ -30,7 +30,7 @@ $composeToExecuteOnLocal = @(
 );
 
 $commadDockerComposeToExecute = "docker-compose"
-$enviromentFile = ".env.$environment"
+$enviromentFile = "env.$environment"
 
 
 

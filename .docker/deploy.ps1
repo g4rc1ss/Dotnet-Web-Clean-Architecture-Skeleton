@@ -2,13 +2,13 @@ param (
     [string]$imageName = "dotnetapp/cleanarchitecture",
     [string]$imageTag = "latest",
     [string]$prevTag = "previous",
-    [string]$vpsUser = "asier",
+    [string]$vpsUser = "",
     [string]$vpsHost = "192.168.64.5",
-    [string]$vpsDest = "/home/asier",
-    [string]$composeDir = "/home/asier",
-    [string]$envFilePath = "/home/asier/.env.test",
+    [string]$vpsDest = "/home/",
+    [string]$composeDir = "/home/",
+    [string]$envFile = "env.test",
     [string]$healthCheckUrl = "http://192.168.64.5/health",
-    [string]$sudoPassword = "3722-Mdt",
+    [string]$sudoPassword = "",
     [string]$sshKeyPath = "./id_rsa"
 )
 $tarImageName = "image_${imageTag}.tar"
@@ -25,7 +25,7 @@ docker save -o $tarImageName "${imageName}:${imageTag}"
 # Transfer the image to the VPS
 scp -i $sshKeyPath $tarImageName "$vpsUser@${vpsHost}:${vpsDest}/"
 scp -i $sshKeyPath $dockerComposeDeploy "$vpsUser@${vpsHost}:${vpsDest}/"
-scp -i $sshKeyPath .env.test "$vpsUser@${vpsHost}:${vpsDest}/"
+scp -i $sshKeyPath $envFile "$vpsUser@${vpsHost}:${vpsDest}/"
 
 # Load the image on the VPS and deploy with Docker Compose
 $deployScript = @"
@@ -44,7 +44,7 @@ echo $sudoPassword | sudo -S bash -c '
     cd ${composeDir}
 
     echo "Ejecutamos el docker compose para levantar la nueva imagen"
-    docker-compose --env-file ${envFilePath} -f ${dockerComposeDeploy} up -d
+    docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
 
     echo "Limpiamos recursos"
     rm -rf ${tarImageName}
@@ -58,7 +58,7 @@ Invoke-Command -ScriptBlock {
 
 # Check the health of the deployed service
 for ($i = 0; $i -lt 10; $i++) {
-    if (Invoke-RestMethod -Uri $healthCheckUrl | grep "healthy") {
+    if (Invoke-RestMethod -Uri $healthCheckUrl | grep -w "healthy") {
         Write-Host "Service is up and running"
         exit 0;
     }
@@ -76,7 +76,7 @@ $rollbackScript = @"
     
     # Redeploy with Docker Compose
     cd $composeDir
-    docker-compose --env-file ${envFilePath} -f ${dockerComposeDeploy} up -d
+    docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
 '
 "@
 
