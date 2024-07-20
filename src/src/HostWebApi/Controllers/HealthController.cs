@@ -13,7 +13,7 @@ public class HealthController : Controller
     [HttpGet("/health")]
     public IActionResult Health()
     {
-        return Ok("healthy");
+        return Ok("healthy2");
     }
 
 }

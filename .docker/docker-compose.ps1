@@ -1,11 +1,11 @@
 param (
     [Parameter(Mandatory = $true)]
     [ValidateSet("up", "down")]
-    [string]$action,
+    [string]$action = "up",
 
     [Parameter(Mandatory = $true)]
     [ValidateSet("local", "test")]
-    [string]$environment,
+    [string]$environment = "test",
 
     [Parameter(Mandatory = $false)]
     [ValidateSet("v")]
@@ -17,16 +17,19 @@ $composeToExecuteAlways = @(
     "docker-compose.openTelemetry.yml"
 );
 
+$composeBuildFiles = @(
+    "docker-compose.buildhostwebapi.yml"
+);
 
 $composeToExecuteOnTest = @(
-    "docker-compose.app.yml"
+    "docker-compose.hostwepapi.yml"
 );
 
 $composeToExecuteOnLocal = @(
     "docker-compose.grafana.yml"
 );
 
-$commadDockerComposeToExecute = "docker compose"
+$commadDockerComposeToExecute = "docker-compose"
 $enviromentFile = ".env.$environment"
 
 
@@ -49,7 +52,13 @@ if ($environment -eq "test") {
     }
 
     if ($action -eq "up") {
-        $buildExec = "$commadDockerComposeToExecute build" 
+        $commandToExecuteBuildApps = "docker-compose"
+
+        foreach ($dockerComposeFile in $composeBuildFiles) {
+            $commandToExecuteBuildApps += " -f $dockerComposeFile";
+        }
+
+        $buildExec = "$commandToExecuteBuildApps build" 
         Write-Output $buildExec
         Invoke-Expression $buildExec
     }
