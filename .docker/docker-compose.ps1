@@ -26,7 +26,6 @@ $composeToExecuteOnTest = @(
 );
 
 $composeToExecuteOnLocal = @(
-    "docker-compose.grafana.yml"
 );
 
 $commadDockerComposeToExecute = "docker-compose"
