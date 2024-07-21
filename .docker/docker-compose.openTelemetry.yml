@@ -1,16 +1,8 @@
-﻿version: '3.8'
-
-networks:
-  cleanArchitectureNetwork:
-    driver: bridge
-
-services:
+﻿services:
   opentelemetry-collector:
     image: otel/opentelemetry-collector-contrib:latest
     container_name: opentelemetry_collector
     restart: always
-    networks:
-      - cleanArchitectureNetwork
     command: [ "--config=/etc/otel-collector.yaml" ]
     volumes:
       - ./Observability/otel-collector.yaml:/etc/otel-collector.yaml

@@ -1,0 +1,23 @@
+services:
+  ## API ##
+  dotnetapp:
+    container_name: HostWebApi
+    image: dotnetapp/cleanarchitecture:latest
+    restart: always
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Path
+      - ASPNETCORE_Kestrel__Certificates__Default__Password
+      - ASPNETCORE_ENVIRONMENT
+      - ASPNETCORE_URLS
+      - AppName
+      - keysFolder
+      - ConnectionStrings__CleanArchitectureSkeletonMongoDb
+      - ConnectionStrings__OpenTelemetry
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - dotnetapp_keys_data:/keysFolder
+
+volumes:
+  dotnetapp_keys_data:

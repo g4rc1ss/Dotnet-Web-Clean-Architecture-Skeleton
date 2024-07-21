@@ -1,0 +1,6 @@
+services:
+  dotnetapp:
+    image: dotnetapp/cleanarchitecture:latest
+    build:
+      context: ../src
+      dockerfile: dockerfile
