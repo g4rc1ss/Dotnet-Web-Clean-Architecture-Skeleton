@@ -1,10 +1,10 @@
 param (
     [string]$vpsUser = "",
-    [string]$vpsHost = "192.168.66.2",
-    [string]$vpsDest = "/home/",
-    [string]$envFile = "env.test",
+    [string]$vpsHost = "",
+    [string]$vpsDest = "",
+    [string]$envFile = "",
     [string]$sudoPassword = "",
-    [string]$sshKeyPath = "./id_rsa"
+    [string]$sshKeyPath = ""
 )
 $dockerComposeDeploy = "docker-compose.mongo.yml"
 
@@ -27,7 +27,7 @@ echo $sudoPassword | sudo -S bash -c '
     docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d --force-recreate
 
     # Success
-    echo "0"
+    echo "0";
 '
 "@
 
@@ -36,7 +36,7 @@ $response = Invoke-Command -ScriptBlock {
     ssh -i $sshKeyPath $user@$vpsHost $script
 } -ArgumentList $deployScript, $vpsUser, $vpsHost, $sshKeyPath
 
-if ($response -ne "0") {
+if ($response[$response.Length - 1] -ne "0") {
     Write-Error "Error al desplegar";
     exit 1;
 }
