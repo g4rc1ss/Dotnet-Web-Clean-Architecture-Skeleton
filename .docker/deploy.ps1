@@ -1,15 +1,17 @@
 param (
-    [string]$imageName = "dotnetapp/cleanarchitecture",
-    [string]$imageTag = "latest",
-    [string]$prevTag = "previous",
     [string]$vpsUser = "",
-    [string]$vpsHost = "192.168.64.5",
-    [string]$vpsDest = "/home/",
-    [string]$envFile = "env.test",
-    [string]$healthCheckUrl = "http://192.168.64.5/health",
+    [string]$vpsHost = "",
+    [string]$vpsDest = "",
+    [string]$envFile = "",
+    [string]$healthCheckUrl = "",
     [string]$sudoPassword = "",
-    [string]$sshKeyPath = "./id_rsa"
+    [string]$sshKeyPath = ""
 )
+
+$imageName = "dotnetapp/cleanarchitecture"
+$imageTag = "latest"
+$prevTag = "previous"
+
 $tarImageName = "image_${imageTag}.tar"
 $dockerComposeDeploy = "docker-compose.hostwepapi.yml"
 $dockerComposeBuildDeploy = "docker-compose.buildhostwebapi.yml"

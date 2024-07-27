@@ -1,4 +1,4 @@
-name: Deploy Mongo Database
+name: Deploy Host Web API
 on:
   workflow_dispatch:
     
@@ -33,11 +33,11 @@ jobs:
           ssh-keyscan -H ${{secrets.HOST}} >> ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts
 
-      - name: Deploy MongoDB
+      - name: Deploy HostWebAPI
         working-directory: .docker
         run: |
           ls -la
-          pwsh -File ./deployMongo.ps1 ${{secrets.USER}} ${{secrets.HOST}} ${{secrets.DEST_FOLDER}} ${{vars.ENV_FILE}} ${{secrets.SUDOPASSWD}} ./id_rsa
+          pwsh -File ./deploy.ps1 ${{secrets.USER}} ${{secrets.HOST}} ${{secrets.DEST_FOLDER}} ${{vars.ENV_FILE}} ${{secrets.SUDOPASSWD}} ./id_rsa
 
   deploy-pro:
     needs: deploy-dev
@@ -70,9 +70,9 @@ jobs:
           ssh-keyscan -H ${{secrets.HOST}} >> ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts
 
-      - name: Deploy MongoDB
+      - name: Deploy HostWebAPI
         working-directory: .docker
         run: |
           ls -la
-          pwsh -File ./deployMongo.ps1 ${{secrets.USER}} ${{secrets.HOST}} ${{secrets.DEST_FOLDER}} ${{vars.ENV_FILE}} ${{secrets.SUDOPASSWD}} ./id_rsa
+          pwsh -File ./deploy.ps1 ${{secrets.USER}} ${{secrets.HOST}} ${{secrets.DEST_FOLDER}} ${{vars.ENV_FILE}} ${{secrets.SUDOPASSWD}} ./id_rsa
             
