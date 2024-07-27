@@ -1,3 +1,6 @@
 {
-    "dotnet.defaultSolution": "src/CleanArchitectureSkeleton.sln"
+    "dotnet.defaultSolution": "src/CleanArchitectureSkeleton.sln",
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/deployphp/deployer/master/src/schema.json": "file:///Users/asiergarciab/Repositories/Dotnet-Web-Clean-Architecture-Skeleton/.github/workflows/deploy.yml"
+    }
 }

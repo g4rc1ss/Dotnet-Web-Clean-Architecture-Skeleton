@@ -1,16 +1,17 @@
 param (
-    [string]$imageName = "dotnetapp/cleanarchitecture",
-    [string]$imageTag = "latest",
-    [string]$prevTag = "previous",
     [string]$vpsUser = "",
-    [string]$vpsHost = "192.168.64.5",
-    [string]$vpsDest = "/home/",
-    [string]$composeDir = "/home/",
-    [string]$envFile = "env.test",
-    [string]$healthCheckUrl = "http://192.168.64.5/health",
+    [string]$vpsHost = "",
+    [string]$vpsDest = "",
+    [string]$envFile = "",
+    [string]$healthCheckUrl = "",
     [string]$sudoPassword = "",
-    [string]$sshKeyPath = "./id_rsa"
+    [string]$sshKeyPath = ""
 )
+
+$imageName = "dotnetapp/cleanarchitecture"
+$imageTag = "latest"
+$prevTag = "previous"
+
 $tarImageName = "image_${imageTag}.tar"
 $dockerComposeDeploy = "docker-compose.hostwepapi.yml"
 $dockerComposeBuildDeploy = "docker-compose.buildhostwebapi.yml"
@@ -41,20 +42,28 @@ echo $sudoPassword | sudo -S bash -c '
     docker load -i ${vpsDest}/${tarImageName}
     
     # Deploy the new image with Docker Compose
-    cd ${composeDir}
+    cd ${vpsDest}
 
     echo "Ejecutamos el docker compose para levantar la nueva imagen"
     docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
 
     echo "Limpiamos recursos"
     rm -rf ${tarImageName}
+
+    # Success
+    echo "0";
 '
 "@
 
-Invoke-Command -ScriptBlock {
+$deployResponse = Invoke-Command -ScriptBlock {
     param($script, $user, $vpsHost, $sshKeyPath)
     ssh -i $sshKeyPath $user@$vpsHost $script
 } -ArgumentList $deployScript, $vpsUser, $vpsHost, $sshKeyPath
+
+if ($deployResponse[$deployResponse.Length - 1] -ne "0") {
+    Write-Error "Error al desplegar";
+    exit 1;
+}
 
 # Check the health of the deployed service
 for ($i = 0; $i -lt 10; $i++) {
@@ -75,12 +84,20 @@ $rollbackScript = @"
     docker tag ${imageName}:${prevTag} ${imageName}:${imageTag}
     
     # Redeploy with Docker Compose
-    cd $composeDir
+    cd $vpsDest
     docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
+
+    # Success
+    echo "0";
 '
 "@
 
-Invoke-Command -ScriptBlock {
+$rollbackResponse = Invoke-Command -ScriptBlock {
     param($script, $user, $vpsHost, $sshKeyPath)
     ssh -i $sshKeyPath $user@$vpsHost $script
 } -ArgumentList $rollbackScript, $vpsUser, $vpsHost, $sshKeyPath
+
+if ($rollbackResponse[$rollbackResponse.Length - 1] -ne "0") {
+    Write-Error "Error al desplegar";
+}
+exit 1;
