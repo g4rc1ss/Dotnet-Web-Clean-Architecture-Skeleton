@@ -2,7 +2,6 @@ param (
     [string]$vpsUser = "",
     [string]$vpsHost = "192.168.66.2",
     [string]$vpsDest = "/home/",
-    [string]$composeDir = "/home/",
     [string]$envFile = "env.test",
     [string]$sudoPassword = "",
     [string]$sshKeyPath = "./id_rsa"
@@ -19,7 +18,7 @@ scp -i $sshKeyPath $envFile "$vpsUser@${vpsHost}:${vpsDest}/"
 $deployScript = @"
 echo $sudoPassword | sudo -S bash -c ' 
     # Deploy the new image with Docker Compose
-    cd ${composeDir}
+    cd ${vpsDest}
 
     echo "Updateamos las imagenes de los contenedores"
     docker-compose -f ${dockerComposeDeploy} pull

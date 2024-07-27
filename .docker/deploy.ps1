@@ -5,7 +5,6 @@ param (
     [string]$vpsUser = "",
     [string]$vpsHost = "192.168.64.5",
     [string]$vpsDest = "/home/",
-    [string]$composeDir = "/home/",
     [string]$envFile = "env.test",
     [string]$healthCheckUrl = "http://192.168.64.5/health",
     [string]$sudoPassword = "",
@@ -41,7 +40,7 @@ echo $sudoPassword | sudo -S bash -c '
     docker load -i ${vpsDest}/${tarImageName}
     
     # Deploy the new image with Docker Compose
-    cd ${composeDir}
+    cd ${vpsDest}
 
     echo "Ejecutamos el docker compose para levantar la nueva imagen"
     docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
@@ -75,7 +74,7 @@ $rollbackScript = @"
     docker tag ${imageName}:${prevTag} ${imageName}:${imageTag}
     
     # Redeploy with Docker Compose
-    cd $composeDir
+    cd $vpsDest
     docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
 '
 "@
