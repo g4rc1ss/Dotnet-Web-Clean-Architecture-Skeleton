@@ -49,13 +49,21 @@ echo $sudoPassword | sudo -S bash -c '
 
     echo "Limpiamos recursos"
     rm -rf ${tarImageName}
+
+    # Success
+    echo "0";
 '
 "@
 
-Invoke-Command -ScriptBlock {
+$deployResponse = Invoke-Command -ScriptBlock {
     param($script, $user, $vpsHost, $sshKeyPath)
     ssh -i $sshKeyPath $user@$vpsHost $script
 } -ArgumentList $deployScript, $vpsUser, $vpsHost, $sshKeyPath
+
+if ($deployResponse[$deployResponse.Length - 1] -ne "0") {
+    Write-Error "Error al desplegar";
+    exit 1;
+}
 
 # Check the health of the deployed service
 for ($i = 0; $i -lt 10; $i++) {
@@ -78,10 +86,18 @@ $rollbackScript = @"
     # Redeploy with Docker Compose
     cd $vpsDest
     docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
+
+    # Success
+    echo "0";
 '
 "@
 
-Invoke-Command -ScriptBlock {
+$rollbackResponse = Invoke-Command -ScriptBlock {
     param($script, $user, $vpsHost, $sshKeyPath)
     ssh -i $sshKeyPath $user@$vpsHost $script
 } -ArgumentList $rollbackScript, $vpsUser, $vpsHost, $sshKeyPath
+
+if ($rollbackResponse[$rollbackResponse.Length - 1] -ne "0") {
+    Write-Error "Error al desplegar";
+    exit 1;
+}
