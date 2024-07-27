@@ -27,6 +27,11 @@ jobs:
           ls -la
           chmod 0400 ./id_rsa
 
+      - name: Add remote host to known_hosts
+        run: |
+          ssh-keyscan -H ${{secrets.HOST}} >> ~/.ssh/known_hosts
+          cat ~/.ssh/known_hosts
+
       - name: Deploy MongoDB
         working-directory: .docker
         run: |
