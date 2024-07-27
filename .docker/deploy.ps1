@@ -5,12 +5,11 @@ param (
     [string]$envFile = "",
     [string]$healthCheckUrl = "",
     [string]$sudoPassword = "",
-    [string]$sshKeyPath = ""
+    [string]$sshKeyPath = "",
+    [string]$imageName = "dotnetapp/cleanarchitecture",
+    [string]$imageTag = "latest",
+    [string]$prevTag = "previous"
 )
-
-$imageName = "dotnetapp/cleanarchitecture"
-$imageTag = "latest"
-$prevTag = "previous"
 
 $tarImageName = "image_${imageTag}.tar"
 $dockerComposeDeploy = "docker-compose.hostwepapi.yml"
@@ -77,27 +76,7 @@ for ($i = 0; $i -lt 10; $i++) {
 
 Write-Host "Health check failed. Rolling back..."
 
-# Rollback to the previous image
-$rollbackScript = @"
-    echo $sudoPassword | sudo -S bash -c '
-    # Tag the previous image as latest
-    docker tag ${imageName}:${prevTag} ${imageName}:${imageTag}
-    
-    # Redeploy with Docker Compose
-    cd $vpsDest
-    docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
+pwsh -File ./rollback.ps1 $imageName $prevTag $imageTag $dockerComposeDeploy $vpsUser $vpsHost $vpsDest $envFile $sudoPassword $sshKeyPath
 
-    # Success
-    echo "0";
-'
-"@
-
-$rollbackResponse = Invoke-Command -ScriptBlock {
-    param($script, $user, $vpsHost, $sshKeyPath)
-    ssh -i $sshKeyPath $user@$vpsHost $script
-} -ArgumentList $rollbackScript, $vpsUser, $vpsHost, $sshKeyPath
-
-if ($rollbackResponse[$rollbackResponse.Length - 1] -ne "0") {
-    Write-Error "Error al desplegar";
-}
+# Cerramos con error porque ha habido que hacer rollback
 exit 1;
