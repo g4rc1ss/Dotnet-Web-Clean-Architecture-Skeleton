@@ -1,4 +1,4 @@
-name: Deploy cleanarchitecture app
+name: Deploy Mongo Database
 on:
   workflow_dispatch:
     
