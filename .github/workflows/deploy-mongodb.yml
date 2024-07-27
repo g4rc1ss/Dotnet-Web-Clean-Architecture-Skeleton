@@ -29,7 +29,8 @@ jobs:
 
       - name: Add remote host to known_hosts
         run: |
-          sudo ssh-keyscan -H ${{secrets.HOST}} >> ~/.ssh/known_hosts
+          mkdir ~/.ssh
+          ssh-keyscan -H ${{secrets.HOST}} >> ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts
 
       - name: Deploy MongoDB
