@@ -18,7 +18,13 @@ jobs:
         working-directory: .docker
         run: |
           ls -la
-          echo ${{secrets.SSH_KEY}} > ./id_rsa
+          echo "${{ secrets.SSH_KEY }}" > ./id_rsa
+          chmod 0400 ./id_rsa
+
+      - name: Set permissions to SSH Key
+        working-directory: .docker
+        run: |
+          ls -la
           chmod 0400 ./id_rsa
 
       - name: Deploy MongoDB
@@ -43,9 +49,14 @@ jobs:
         working-directory: .docker
         run: |
           ls -la
-          echo ${{secrets.SSH_KEY}} > ./id_rsa
+          echo "${{ secrets.SSH_KEY }}" > ./id_rsa
           chmod 0400 ./id_rsa
-          echo "Hola Mundo"
+
+      - name: Set permissions to SSH Key
+        working-directory: .docker
+        run: |
+          ls -la
+          chmod 0400 ./id_rsa
 
       - name: Deploy MongoDB
         working-directory: .docker
