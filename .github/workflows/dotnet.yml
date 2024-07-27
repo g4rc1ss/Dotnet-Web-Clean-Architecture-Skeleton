@@ -4,10 +4,11 @@
 name: .NET_CI
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_dispatch:
   pull_request:
     branches: [ "main" ]
+  schedule:
+    - cron: '19 8 * * 6'
 
 jobs:
   build:
