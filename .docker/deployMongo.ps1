@@ -10,7 +10,6 @@ $dockerComposeDeploy = "docker-compose.mongo.yml"
 
 
 # Transfer the image to the VPS
-set -e
 scp -v -i $sshKeyPath -r ./MongoDB "$vpsUser@${vpsHost}:${vpsDest}/"
 scp -i $sshKeyPath $dockerComposeDeploy "$vpsUser@${vpsHost}:${vpsDest}/"
 scp -i $sshKeyPath $envFile "$vpsUser@${vpsHost}:${vpsDest}/"
