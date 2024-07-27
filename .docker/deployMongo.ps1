@@ -25,10 +25,18 @@ echo $sudoPassword | sudo -S bash -c '
 
     echo "Ejecutamos el docker compose para levantar la nueva imagen"
     docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d --force-recreate
+
+    # Success
+    echo "0"
 '
 "@
 
-Invoke-Command -ScriptBlock {
+$response = Invoke-Command -ScriptBlock {
     param($script, $user, $vpsHost, $sshKeyPath)
     ssh -i $sshKeyPath $user@$vpsHost $script
 } -ArgumentList $deployScript, $vpsUser, $vpsHost, $sshKeyPath
+
+if ($response -ne "0") {
+    Write-Error "Error al desplegar";
+    exit 1;
+}
