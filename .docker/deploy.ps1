@@ -77,3 +77,6 @@ for ($i = 0; $i -lt 10; $i++) {
 Write-Host "Health check failed. Rolling back..."
 
 pwsh -File ./rollback.ps1 $imageName $prevTag $imageTag $dockerComposeDeploy $vpsUser $vpsHost $vpsDest $envFile $sudoPassword $sshKeyPath
+
+# Cerramos con error porque ha habido que hacer rollback
+exit 1;

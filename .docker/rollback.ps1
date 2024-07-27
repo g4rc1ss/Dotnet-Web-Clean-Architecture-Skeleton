@@ -35,4 +35,3 @@ $rollbackResponse = Invoke-Command -ScriptBlock {
 if ($rollbackResponse[$rollbackResponse.Length - 1] -ne "0") {
     Write-Error "Error al desplegar";
 }
-exit 1;
