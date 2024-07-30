@@ -5,7 +5,9 @@ Skeleton de una Clean Architecture en .net
 - Esta implementada mediante el patron CQRS, considero que mejora la legibilidad del codigo y permite tener mas definido el principio de responsabilidad unica
 - La aplicacion esta configurada con OpenTelemetry para la recoleccion de metricas(uso de cpu, ram, request, etc.), traces(diferentes llamadas que va ejecutando el codigo) y logs(registros para almacenar errores, etc.)
     - Las librerias que se usan para todo esto son Prometheus(bbdd), Grafana(visualizador de metrics), Zipkin(trace) y Seq(logs)
- 	
+
+![image](https://github.com/user-attachments/assets/67b58a75-81b1-4125-868d-2661ddf326c0)
+
 ## Guía de instalación
 ---
 
