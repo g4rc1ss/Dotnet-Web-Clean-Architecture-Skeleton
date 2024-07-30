@@ -14,20 +14,6 @@ Para ejecutar la aplicacion en un entorno localhost utilizamos el script en powe
 ./docker-compose.ps1 up local
 ```
 
-Si queremos ejecutar el docker en un entorno dev, stagging o pro en un servidor que no es localhost, tendremos que crear las variables de entorno que hay en el archivo .env en el servidor VPS o cloud correspondiente
-```powershell
-./docker-compose.ps1 up dev
-./docker-compose.ps1 up pre
-./docker-compose.ps1 up pro
-```
-
-Las variables de los docker-compose y dockerfile se estan rellenando mediante variables de entorno, de forma que podemos tener diferentes archivos para `dev`, `pre` y `pro`.
-
-```powershell
-./docker-compose.ps1 up dev -manualEnvPath /ruta/env
-```
-> Si no rellenamos el `-manualEnvPath` coge el archivo en la ruta de ejecucion de este script con nombre `.env.{nombreDelEntorno}`
-
 Si queremos desmontar los contenedores ejecutaremos el comando
 ```powershell
 ./docker-compose.ps1 down local
@@ -39,9 +25,16 @@ El comando con el parametro `down` solamente elimina los contenedores, pero este
 ```
 > Hay que tener en cuenta que con el parametro `v`se eliminan todos los volumenes persistentes, no es recomendable usarlo en despliegues, sobretodo en produccion.
 
-## CI/DC
-[![.NET](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/dotnet.yml/badge.svg)](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/dotnet.yml)
-[![CodeQL](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/codeql-analysis.yml)
+## Continous Integration
+[![.NET_CI](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/dotnet.yml/badge.svg)](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/dotnet.yml)
+[![CodeQL](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/codeql.yml/badge.svg)](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/codeql.yml)
+[![Docker_build](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/docker-check.yml/badge.svg)](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/docker-check.yml)
+
+## Continous Delivery
+[![Deploy Host Web API](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/deploy-hostwebapi.yml/badge.svg)](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/deploy-hostwebapi.yml)
+[![Deploy Mongo Database](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/deploy-mongodb.yml/badge.svg)](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/deploy-mongodb.yml)
+[![Deploy Open Telemetry](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/deploy-opentelemetry.yml/badge.svg)](https://github.com/g4rc1ss/Dotnet-Web-Clean-Architecture-Skeleton/actions/workflows/deploy-opentelemetry.yml)
+
 
 ## Autor/es
 ---
