@@ -1,7 +1,6 @@
 services:
   ## API ##
   dotnetapp:
-    container_name: HostWebApi
     image: dotnetapp/cleanarchitecture:latest
     restart: always
     environment:
@@ -23,7 +22,7 @@ services:
       retries: 3
       start_period: 2s
     deploy:
-      replicas: 2
+      replicas: 1
       resources:
         limits:
           cpus: "1.0"
