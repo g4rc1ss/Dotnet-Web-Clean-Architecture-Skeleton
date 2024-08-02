@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hostwebapi-service
+spec:
+  selector:
+    app: hostwebapi
+    tier: backend
+  ports:
+    - name: api-hostwebapi-port
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostwebapi-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hostwebapi
+  template:
+    metadata:
+      labels:
+        app: hostwebapi
+    spec:
+      containers:
+      - name: 
+        image: asiergb/cleanarchitecture
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+          name: hostwebapi-configmap
+        - secretRef:
+          name: hostwebapi-secret
+        resources:
+          limits:
+            cpu: 100m
+            memory: 64Mi
+          requests:
+            cpu: 50m
+            memory: 32Mi
+          livenessProbe:
+            exec:
+              command: ["CMD-SHELL", "curl -s http://localhost/health | grep -w 'healthy' || exit 1"]
+          regardnessProbe:
+            exe:
+              command: ["CMD-SHELL", "curl -s http://localhost/health | grep -w 'healthy' || exit 1"]
+        volumeMounts:
+        - name: keysVolume
+          mountPah: /keysFolder
+      volumes:
+      - name: keysVolume
+        emptyDir: {}      

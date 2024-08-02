@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongodatapv
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data" #path de archivos ubicados en el disco del nodo
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodatapvc
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+spec:
+  selector:
+    app: mongodb
+    tier: backend
+  ports:
+    - name: api-mongodb-port
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodatabase
+        image: mongo
+        ports:
+        - containerPort: 27017
+        envFrom:
+        - secretRef:
+            name: hostwebapi-secret
+        resources:
+          limits:
+            cpu: 100m
+            memory: 600Mi
+          requests:
+            cpu: 50m
+            memory: 32Mi
+        livenessProbe:
+          exec:
+            command:
+            - mongosh
+            - --eval
+            - "db.runCommand('ping').ok"
+        readinessProbe:
+          exec:
+            command:
+            - mongosh
+            - --eval
+            - "db.runCommand('ping').ok "
+        volumeMounts:
+        - name: mongodb-data
+          mountPath: /data
+      volumes:
+      - name: mongodb-data
+        persistentVolumeClaim:
+          claimName: mongodatapvc

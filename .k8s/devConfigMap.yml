@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hostwebapi-configmap
+data:
+  ASPNETCORE_Kestrel__Certificates__Default__Path: /app/cert.pfx
+  ASPNETCORE_Kestrel__Certificates__Default__Password: password
+  ASPNETCORE_ENVIRONMENT: Dev
+  ASPNETCORE_URLS: https://+:443;http://+:80
+  AppName: HostWebApiTest
+  keysFolder: /keysFolder
