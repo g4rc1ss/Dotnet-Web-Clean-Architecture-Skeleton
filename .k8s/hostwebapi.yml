@@ -7,10 +7,14 @@ spec:
     app: hostwebapi
     tier: backend
   ports:
-    - name: api-hostwebapi-port
+    - name: api-hostwebapi-port-http
       protocol: TCP
       port: 80
       targetPort: 80
+    - name: api-hostwebapi-port-https
+      protocol: TCP
+      port: 443
+      targetPort: 443
   type: LoadBalancer
 ---
 
@@ -29,31 +33,40 @@ spec:
         app: hostwebapi
     spec:
       containers:
-      - name: 
+      - name: hostwebapi
         image: asiergb/cleanarchitecture
         ports:
-        - containerPort: 80
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
         envFrom:
         - configMapRef:
-          name: hostwebapi-configmap
+            name: hostwebapi-configmap
         - secretRef:
-          name: hostwebapi-secret
+            name: hostwebapi-secret
         resources:
           limits:
-            cpu: 100m
-            memory: 64Mi
+            cpu: 1000m
+            memory: 1Gi
           requests:
             cpu: 50m
-            memory: 32Mi
-          livenessProbe:
-            exec:
-              command: ["CMD-SHELL", "curl -s http://localhost/health | grep -w 'healthy' || exit 1"]
-          regardnessProbe:
-            exe:
-              command: ["CMD-SHELL", "curl -s http://localhost/health | grep -w 'healthy' || exit 1"]
+            memory: 200Mi
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 30
         volumeMounts:
-        - name: keysVolume
-          mountPah: /keysFolder
+        - name: keysvolume
+          mountPath: /keysFolder
       volumes:
-      - name: keysVolume
+      - name: keysvolume
         emptyDir: {}      

@@ -64,7 +64,7 @@ spec:
             name: hostwebapi-secret
         resources:
           limits:
-            cpu: 100m
+            cpu: 1000m
             memory: 600Mi
           requests:
             cpu: 50m
@@ -72,15 +72,20 @@ spec:
         livenessProbe:
           exec:
             command:
-            - mongosh
-            - --eval
-            - "db.runCommand('ping').ok"
+              - mongosh
+              - --eval
+              - db.runCommand('ping').ok
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
         readinessProbe:
           exec:
             command:
-            - mongosh
-            - --eval
-            - "db.runCommand('ping').ok "
+              - mongosh
+              - --eval
+              - db.runCommand('ping').ok
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
+          periodSeconds: 120
         volumeMounts:
         - name: mongodb-data
           mountPath: /data

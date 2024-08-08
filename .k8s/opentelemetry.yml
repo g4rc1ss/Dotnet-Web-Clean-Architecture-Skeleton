@@ -104,7 +104,7 @@ spec:
         - containerPort: 4317
         resources:
           limits:
-            cpu: 100m
+            cpu: 1000m
             memory: 600Mi
           requests:
             cpu: 50m
