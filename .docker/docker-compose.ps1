@@ -28,7 +28,7 @@ $composeToExecuteOnTest = @(
 $composeToExecuteOnLocal = @(
 );
 
-$commadDockerComposeToExecute = "docker-compose"
+$commadDockerComposeToExecute = "docker compose"
 $enviromentFile = "env.$environment"
 
 
