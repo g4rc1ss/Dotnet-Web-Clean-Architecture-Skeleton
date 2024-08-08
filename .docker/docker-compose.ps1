@@ -51,7 +51,7 @@ if ($environment -eq "test") {
     }
 
     if ($action -eq "up") {
-        $commandToExecuteBuildApps = "docker-compose"
+        $commandToExecuteBuildApps = "docker compose"
 
         foreach ($dockerComposeFile in $composeBuildFiles) {
             $commandToExecuteBuildApps += " -f $dockerComposeFile";
