@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: Docker_build
+name: Docker Check
 
 on:
   workflow_dispatch:
@@ -46,13 +46,3 @@ jobs:
       run: |
         ls -la
         pwsh -File ./docker-compose.ps1 down test v
-
-    - name: Login to Docker
-      uses: docker/login-action@v3
-      with:
-          username: ${{secrets.DOCKER_HUB_USER}}
-          password: ${{secrets.DOCKER_HUB_TOKEN}}
-
-    - name: Push to Docker Registry
-      run: |
-        docker push ${{secrets.DOCKER_HUB_USER}}/cleanarchitecture:latest

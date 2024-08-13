@@ -1,7 +1,7 @@
 services:
   dotnetapp:
-    image: dotnetapp/cleanarchitecture:latest
+    image: asiergb/cleanarchitecture:latest
     build:
       context: ../src
       dockerfile: dockerfile
-      # platforms: [linux/amd64]
+      platforms: [linux/amd64]
