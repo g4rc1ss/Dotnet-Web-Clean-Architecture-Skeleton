@@ -1,7 +1,7 @@
 services:
   ## API ##
   dotnetapp:
-    image: dotnetapp/cleanarchitecture:latest
+    image: asiergb/cleanarchitecture:latest
     restart: always
     environment:
       - ASPNETCORE_Kestrel__Certificates__Default__Path

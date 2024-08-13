@@ -6,7 +6,7 @@ param (
     [string]$healthCheckUrl = "",
     [string]$sudoPassword = "",
     [string]$sshKeyPath = "",
-    [string]$imageName = "dotnetapp/cleanarchitecture",
+    [string]$imageName = "asiergb/cleanarchitecture",
     [string]$imageTag = "latest",
     [string]$prevTag = "previous"
 )
