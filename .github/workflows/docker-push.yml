@@ -22,6 +22,7 @@ jobs:
           password: ${{secrets.DOCKER_HUB_TOKEN}}
 
     - name: Build docker
+      working-directory: .docker
       run: |
         docker compose -f docker-compose.buildhostwebapi.yml build
 
