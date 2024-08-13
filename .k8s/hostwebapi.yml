@@ -5,7 +5,6 @@ metadata:
 spec:
   selector:
     app: hostwebapi
-    tier: backend
   ports:
     - name: api-hostwebapi-port-http
       protocol: TCP

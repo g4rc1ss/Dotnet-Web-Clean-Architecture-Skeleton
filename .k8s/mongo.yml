@@ -32,7 +32,6 @@ metadata:
 spec:
   selector:
     app: mongodb
-    tier: backend
   ports:
     - name: api-mongodb-port
       protocol: TCP
@@ -75,7 +74,7 @@ spec:
               - mongosh
               - --eval
               - db.runCommand('ping').ok
-          initialDelaySeconds: 30
+          initialDelaySeconds: 10
           timeoutSeconds: 30
         readinessProbe:
           exec:
@@ -83,13 +82,13 @@ spec:
               - mongosh
               - --eval
               - db.runCommand('ping').ok
-          initialDelaySeconds: 30
+          initialDelaySeconds: 10
           timeoutSeconds: 30
           periodSeconds: 120
         volumeMounts:
-        - name: mongodb-data
-          mountPath: /data
+        - name: mongodb-data-db
+          mountPath: /data/db
       volumes:
-      - name: mongodb-data
+      - name: mongodb-data-db
         persistentVolumeClaim:
           claimName: mongodatapvc

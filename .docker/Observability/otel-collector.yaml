@@ -32,7 +32,7 @@ exporters:
   otlphttp:
     endpoint: https://otlp-gateway-prod-us-east-0.grafana.net/otlp
     headers: 
-      Authorization: Basic ODM5OTgxOmdsY19leUp2SWpvaU9UQXhNREkwSWl3aWJpSTZJbk4wWVdOckxUZ3pPVGs0TVMxdmRHeHdMWGR5YVhSbExXZHlZV1poYm1GdmRHVnNZV2RsYm5SMGIydGxiaUlzSW1zaU9pSmhUMDVCTWpReFQycHBlRFJQYlRoV05USXlaWFEyT0ZNaUxDSnRJanA3SW5JaU9pSndjbTlrTFhWekxXVmhjM1F0TUNKOWZRPT0=
+      Authorization:
 
 # https://opentelemetry.io/docs/collector/configuration/#processors
 processors:

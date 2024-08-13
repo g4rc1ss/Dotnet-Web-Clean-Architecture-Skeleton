@@ -5,7 +5,6 @@ metadata:
 spec:
   selector:
     app: otel
-    tier: backend
   ports:
     - name: prometheus-exposed-metrics
       protocol: TCP
@@ -19,8 +18,11 @@ spec:
       protocol: TCP
       port: 4317
       targetPort: 4317
+    - name: otlp-http
+      protocol: TCP
+      port: 4318
+      targetPort: 4318
 ---
-
 
 apiVersion: v1
 kind: ConfigMap
@@ -28,57 +30,40 @@ metadata:
   name: otel-configmap
 data:
   otel-collector.yaml: |
-    # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver
     receivers:
       otlp:
         protocols:
           grpc:
+            endpoint: 0.0.0.0:4317
           http:
+            endpoint: 0.0.0.0:4318
     
-    # Configure exporters
-    #######
-    # LOCAL #
-    #######
-    prometheus:
-      endpoint: 0.0.0.0:8889
-      send_timestamps: true
-    loki:
-      endpoint: http://loki-grafana:3100/loki/api/v1/push
-      tls:
-        insecure: true
-    otlp/1:
-      endpoint: tempo-grafana:4317
-      tls:
-        insecure: true
-    
-    ###############
-    # GRAFANA CLOUD #
-    ###############
-    otlphttp:
-      endpoint: https://otlp-gateway-prod-us-east-0.grafana.net/otlp
-      headers:
-        Authorization Basic MTAwOTY1MTpnbGNfZXlKdklqb2lPVEF4TURJMElpd2liaUk2SW5OMFlXTnJMVEV3TURrMk5URXRiM1JzY0MxM2NtbDBaUzFyZFdKbGNtNWxkR1Z6SWl3aWF5STZJblV4TlRSNU9UTklOVTQyWWt4UU1HcENWV1UxU0RWbmVpSXNJbTBpT25zaWNpSTZJbkJ5YjJRdGRYTXRaV0Z6ZEMwd0luMTk=
-    
-    # https://opentelemetry.io/docs/collector/configuration/#processors
     processors:
       batch:
     
-    # https://opentelemetry.io/docs/collector/configuration/#service
-    # https://github.com/open-telemetry/opentelemetry-collector/blob/main/docs/design.md#pipelines
+    exporters:
+      logging:
+        verbosity: detailed
+
+      otlphttp:
+        endpoint: https://otlp-gateway-prod-us-east-0.grafana.net/otlp
+        headers:
+          Authorization: Basic MTAwOTY1MTpnbGNfZXlKdklqb2lPVEF4TURJMElpd2liaUk2SW5OMFlXTnJMVEV3TURrMk5URXRiM1JzY0MxM2NtbDBaUzF3Y25WbFltRnZkR3h3SWl3aWF5STZJblE1ZDNadGN6Z3hTM2xWWmpKRk4yOUtPR3MxTmxjMk5TSXNJbTBpT25zaWNpSTZJbkJ5YjJRdGRYTXRaV0Z6ZEMwd0luMTk=
+    
     service:
       pipelines:
         traces:
           receivers: [otlp]
           processors: [batch]
-          exporters: [otlp/1, otlphttp]
+          exporters: [otlphttp]
         metrics:
           receivers: [otlp]
           processors: [batch]
-          exporters: [prometheus, otlphttp]
+          exporters: [otlphttp]
         logs:
           receivers: [otlp]
           processors: []
-          exporters: [loki, otlphttp]
+          exporters: [otlphttp, logging]
 ---
 
 apiVersion: apps/v1
@@ -98,10 +83,14 @@ spec:
       containers:
       - name: otel
         image: otel/opentelemetry-collector-contrib:latest
+        command:
+          - "/otelcol-contrib"
+          - "--config=/etc/otel/otel-collector.yaml"
         ports:
         - containerPort: 27017
         - containerPort: 8889
         - containerPort: 4317
+        - containerPort: 4318
         resources:
           limits:
             cpu: 1000m
