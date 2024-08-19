@@ -39,7 +39,7 @@ public static class HostBuilderExtensions
                 trace.AddSource(nameof(WeatherForecastSyncHandler));
                 trace.AddAspNetCoreInstrumentation();
                 trace.AddHttpClientInstrumentation();
-                trace.AddMongoDBInstrumentation();
+                trace.AddSource("MongoDB.Driver.Core.Extensions.DiagnosticSources");
                 trace.AddSource(nameof(IDistributedCache));
                 trace.AddOtlpExporter(exporter => exporter.Endpoint = new Uri(configuration["ConnectionStrings:OpenTelemetry"]!));
             })
